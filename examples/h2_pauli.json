@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "n_qubits": 2,
+  "qubit_order": "q0-most-significant",
+  "terms": [
+    {"pauli": "II", "coefficient": -0.2},
+    {"pauli": "ZI", "coefficient": 0.4},
+    {"pauli": "IZ", "coefficient": -0.3},
+    {"pauli": "ZZ", "coefficient": 0.12},
+    {"pauli": "XX", "coefficient": 0.15}
+  ]
+}

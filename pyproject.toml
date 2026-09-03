@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mpqc-measurement"
+version = "0.1.0"
+description = "GPD and SRDD Hamiltonian measurement decompositions with fixed-shot error estimates"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+  "numpy>=1.26,<3",
+  "scipy>=1.11,<2",
+]
+
+[project.optional-dependencies]
+gpd = ["jax[cpu]>=0.4.38,<0.7"]
+dev = []
+
+[project.scripts]
+mpqc-measure = "mpqc_measurement.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
