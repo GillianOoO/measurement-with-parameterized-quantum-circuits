@@ -1,0 +1,18 @@
+{
+  "kind": "table",
+  "filters": {
+    "molecule": ["H4", "H6", "BeH2", "N2"],
+    "method": ["SRDD", "FC-IMA", "OGM", "SG", "Derand"]
+  },
+  "sort": ["molecule", "method"],
+  "align": "llrrrrr",
+  "columns": [
+    {"header": "Molecule", "field": "molecule"},
+    {"header": "Method", "field": "method"},
+    {"header": "$V_{\\rm fix}$", "field": "estimator_variance_hartree2", "format": "sci"},
+    {"header": "$T V_{\\rm fix}$", "field": "T_times_fixed_variance_hartree2", "format": "sci"},
+    {"header": "$V_{\\rm iid}^{(\\rm sched)}$", "field": "iid_empirical_distribution_one_shot_variance_hartree2", "format": "sci"},
+    {"header": "$b$", "field": "signed_approximation_bias_hartree", "format": "sci"},
+    {"header": "MSE", "field": "analytic_MSE_hartree2", "format": "sci"}
+  ]
+}

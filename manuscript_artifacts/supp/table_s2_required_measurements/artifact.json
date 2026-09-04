@@ -1,0 +1,10 @@
+{
+  "kind": "matrix_table",
+  "row_field": "plot_label",
+  "column_field": "method",
+  "value_field": "shots_to_error_0p01",
+  "rows": ["H4", "H6", "BeH2", "N2"],
+  "columns": ["SRDD", "FC-IMA", "OGM", "SG", "Derand"],
+  "format": "int",
+  "align": "lrrrrr"
+}

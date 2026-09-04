@@ -1,0 +1,13 @@
+{
+  "kind": "bar",
+  "panel_field": "plot_label",
+  "method_field": "method",
+  "figsize": [7.25, 2.75],
+  "panel_values": ["H4", "H6", "BeH2", "N2"],
+  "methods": ["SRDD", "FC-IMA", "OGM", "SG", "Derand"],
+  "panels": [
+    {"title": "State-dependent sampling variance", "y_field": "sampling_variance", "ylabel": "Variance (Ha^2)", "yscale": "log"},
+    {"title": "Distinct allocations", "y_field": "decomposition_items", "ylabel": "Number of allocations", "yscale": "log"},
+    {"title": "Projected RMSE = 0.01 Ha", "y_field": "shots_to_error_0p01", "ylabel": "Required measurements", "yscale": "log"}
+  ]
+}

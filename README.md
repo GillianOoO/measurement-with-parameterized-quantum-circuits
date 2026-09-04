@@ -31,6 +31,14 @@ SRDD and the universal Pauli wrapper require only NumPy and SciPy:
 python -m pip install -e .
 ```
 
+The publication figure and table builders are organized by artifact under
+[`manuscript_artifacts`](manuscript_artifacts/README.md). Install their optional
+dependencies with
+
+```powershell
+python -m pip install -e ".[artifacts]"
+```
+
 ## Python API
 
 ```python

@@ -1,0 +1,20 @@
+{
+  "kind": "line",
+  "panel_field": "benchmark",
+  "method_field": "method",
+  "ncols": 2,
+  "figsize": [7.25, 2.75],
+  "xscale": "log",
+  "yscale": "log",
+  "grid": true,
+  "legend_methods": ["GPD", "OGM", "SG", "Derand", "LCS", "AP"],
+  "legend_ncol": 6,
+  "subplots_adjust": {"left": 0.10, "right": 0.995, "bottom": 0.18, "top": 0.78, "wspace": 0.28},
+  "row_requirements": [
+    {"when": {"method": "GPD"}, "require": {"selection": "stabilizer-calibrated balanced GPD"}}
+  ],
+  "panels": [
+    {"value": "sparse", "title": "Sparse four-qubit ensemble", "x_field": "shots", "y_field": "mean_instance_empirical_rmse", "xlabel": "The number of measurements", "ylabel": "Error (Ha)", "methods": ["GPD", "OGM", "SG", "Derand", "LCS", "AP"]},
+    {"value": "dense", "title": "Dense four-qubit ensemble", "x_field": "shots", "y_field": "mean_instance_empirical_rmse", "xlabel": "The number of measurements", "ylabel": "", "methods": ["GPD", "OGM", "SG", "Derand", "LCS", "AP"]}
+  ]
+}
