@@ -10,6 +10,11 @@ htmlcov/
 build/
 dist/
 results/
+manuscript_artifacts/reproduction/data/
+manuscript_artifacts/reproduction/figures/
+manuscript_artifacts/reproduction/paper/
+manuscript_artifacts/reproduction/validation/current_bias_validation.json
+manuscript_artifacts/reproduction/validation/matplotlib/
 *.log
 .DS_Store
 Thumbs.db

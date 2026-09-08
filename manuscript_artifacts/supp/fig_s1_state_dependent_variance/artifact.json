@@ -1,22 +1,32 @@
 {
-  "kind": "line",
-  "panel_field": "panel",
-  "method_field": "method",
-  "ncols": 3,
-  "figsize": [7.25, 5.0],
-  "xscale": "log",
-  "yscale": "log",
-  "legend_methods": ["GPD", "SRDD", "FC-IMA", "OGM", "SG", "Derand", "LCS", "AP"],
-  "legend_ncol": 8,
-  "row_requirements": [
-    {"when": {"method": "GPD"}, "require": {"selection": "depth-L=4 stabilizer-calibrated GPD prefix"}}
+  "kind": "canonical",
+  "figure_id": "s1",
+  "filename": "supp_state_dependent_variance_vs_budget.pdf",
+  "panel_order": [
+    "H4",
+    "H6",
+    "BeH2",
+    "N2",
+    "sparse",
+    "dense"
   ],
-  "panels": [
-    {"value": "H4", "title": "H4", "x_field": "measurements", "y_field": "variance", "xlabel": "The number of measurements", "ylabel": "Variance (Ha^2)", "methods": ["SRDD", "OGM", "SG", "Derand"]},
-    {"value": "H6", "title": "H6", "x_field": "measurements", "y_field": "variance", "xlabel": "The number of measurements", "ylabel": "Variance (Ha^2)", "methods": ["SRDD", "OGM", "SG", "Derand"]},
-    {"value": "BeH2", "title": "BeH2", "x_field": "measurements", "y_field": "variance", "xlabel": "The number of measurements", "ylabel": "Variance (Ha^2)", "methods": ["SRDD", "FC-IMA", "OGM", "SG", "Derand"]},
-    {"value": "N2", "title": "N2", "x_field": "measurements", "y_field": "variance", "xlabel": "The number of measurements", "ylabel": "Variance (Ha^2)", "methods": ["SRDD", "FC-IMA", "OGM", "SG", "Derand"]},
-    {"value": "sparse", "title": "Sparse Hamiltonians", "x_field": "measurements", "y_field": "variance", "xlabel": "The number of measurements", "ylabel": "Average variance", "methods": ["GPD", "OGM", "SG", "Derand", "LCS", "AP"]},
-    {"value": "dense", "title": "Dense Hamiltonians", "x_field": "measurements", "y_field": "variance", "xlabel": "The number of measurements", "ylabel": "Average variance", "methods": ["GPD", "OGM", "SG", "Derand", "LCS", "AP"]}
-  ]
+  "source_script": "reproduction/code/plotting/plot_figures_2_4_5_and_supp.py",
+  "upper_axes": "log-log exact sampling variance",
+  "lower_plot": "inverted absolute-bias bars, joined upper/lower borders, shared logarithmic measurement axis",
+  "bias_axis": "left, linear, zero at top; nonnegative magnitude labels",
+  "molecular_bias": "abs(Tr[rho(H_hat-H)]) for selected SRDD decomposition",
+  "random_bias": "mean of individual absolute GPD biases over five instances",
+  "displayed_bias_rows": 38,
+  "random_display_measurements": [
+    45,
+    160,
+    572,
+    2038,
+    7259,
+    25848
+  ],
+  "omitted_measurements": [
+    12
+  ],
+  "omission_scope": "SI (e,f) only, for every upper curve and lower bar; raw records and Main 5 retain T=12"
 }

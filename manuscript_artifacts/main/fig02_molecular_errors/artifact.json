@@ -1,14 +1,17 @@
 {
-  "kind": "line",
-  "panel_field": "panel",
-  "method_field": "method",
-  "ncols": 3,
-  "figsize": [7.25, 2.65],
-  "legend_methods": ["SRDD", "OGM", "SG", "Derand"],
-  "legend_ncol": 4,
-  "panels": [
-    {"value": "H4 bond scan", "title": "H4, T=2038", "x_field": "bond_length_angstrom", "y_field": "empirical_rmse", "xlabel": "Bond length R (angstrom)", "ylabel": "Error (Ha)", "methods": ["SRDD", "OGM", "SG", "Derand"]},
-    {"value": "H4 fixed", "title": "H4, R=1.20 angstrom", "x_field": "measurements", "y_field": "empirical_rmse", "xlabel": "The number of measurements", "ylabel": "Error (Ha)", "xscale": "log", "methods": ["SRDD", "OGM", "SG", "Derand"]},
-    {"value": "H6 fixed", "title": "H6, R=3.40 angstrom", "x_field": "measurements", "y_field": "empirical_rmse", "xlabel": "The number of measurements", "ylabel": "Error (Ha)", "xscale": "log", "methods": ["SRDD", "SG"]}
-  ]
+  "kind": "canonical",
+  "figure_id": "2",
+  "filename": "molecular_hamiltonian_errors.pdf",
+  "panel_order": [
+    "H4 bond scan",
+    "H4 R=1.20 A",
+    "H6 R=3.40 A"
+  ],
+  "methods": [
+    "SRDD",
+    "OGM",
+    "SG",
+    "Derand"
+  ],
+  "source_script": "reproduction/code/plotting/plot_figures_2_4_5_and_supp.py"
 }

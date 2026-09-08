@@ -1,45 +1,77 @@
-# Manuscript artifact builders
+# Current manuscript artifacts
 
-This directory maps every generated main-text figure and Supplementary
-Information figure/table to a dedicated artifact folder. Shared rendering code
-lives in `build.py`; each folder contains an `artifact.json` with the exact
-panel, field, scale, method-order, and output configuration for that artifact.
+The current main-text Figures 1--5 and SI Figure 1 use the canonical archived
+plotters in `reproduction/code/plotting/`. Their required numerical inputs, audits and reviewed assets are supplied
+from the user's local classified archive. This branch publishes code and input
+filenames/hashes, not the detailed research datasets or audit records.
 
-The directory is the publication layer of the existing `mpqc_measurement`
-package rather than a second implementation of the measurement algorithms.
-The package writes normalized CSV presentations, and the builders read those
-CSVs directly without digitizing PDF or PNG files. GPD rows used by the
-random-Hamiltonian artifacts must be produced by the stabilizer-calibrated
-balanced selector implemented in `mpqc_measurement.selection`:
+## Rebuild and validate
 
-```text
-x_a(K)   = ||Pi (H - H_hat_K) Pi||_F
-x_s(K,T) = sqrt(sum_i lambda_i(K)^2 / T_i)
-L(K,T)   = hypot(w_a x_a(K), w_s x_s(K,T))
-```
-
-Run a builder from the repository root:
+Only NumPy and Matplotlib are needed for the figure rebuild. The reference
+environment is Python 3.14.7, NumPy 2.5.2 and Matplotlib 3.11.1 with Times New
+Roman; the font is not redistributed. The method package has separate
+installation requirements.
 
 ```powershell
-python manuscript_artifacts/build.py `
-  manuscript_artifacts/main/fig05_random_hamiltonian_errors `
-  --input path/to/manuscript_random_stabilizer_gpd_comparison.csv `
-  --output build/general_hamiltonian_gpd_average_errors.pdf
+python manuscript_artifacts/prepare_inputs.py --archive-root PATH_TO_paper_reproducibility
+python manuscript_artifacts/build_all.py --output build/manuscript
+python manuscript_artifacts/reproduction/validation/validate_bias_update.py --plot-only --rebuild-dir build/manuscript
 ```
 
-Each artifact README names the expected manuscript filename and CSV schema.
-The source Hamiltonians, finite-measurement replay records, fitted calibration
-metadata, and hash manifests remain experiment outputs and are not embedded in
-the plotting code.
+Eight code/document hashes and 91 locally imported input/asset hashes are checked
+before rendering. Imported data, audits and figure assets are gitignored. Five numerical
+combination PNGs and twelve Figure 3/SI panels are checked against the archived
+rebuild references. Figure 1 is copied from its reviewed PDF, with the editable
+PPTX retained in the local archive. Output PDFs, PNGs, individual panels, presentation CSVs, input
+hashes and runtime information are saved in the chosen output directory.
 
-## Artifact index
+Use `--figures s1` for only SI Figure 1, or an individual artifact command:
 
-- `main/fig01_framework`: framework diagram overlay builder.
-- `main/fig02_molecular_errors`: H4/H6 molecular error panels.
-- `main/fig03_additional_molecules`: BeH2/N2 error, resource, and noise panels.
-- `main/fig04_resource_summary`: variance, allocation, and required-measurement bars.
-- `main/fig05_random_hamiltonian_errors`: sparse/dense empirical-RMSE panels.
-- `supp/fig_s1_state_dependent_variance`: molecular and sparse/dense variance panels.
-- `supp/table_s1_state_dependent_variance`: exact variance, bias, and MSE table.
-- `supp/table_s2_required_measurements`: projected required measurements.
-- `supp/table_s3_cnot_counts`: projected executed CNOT counts.
+```powershell
+python manuscript_artifacts/build.py manuscript_artifacts/supp/fig_s1_state_dependent_variance --output build/supp_state_dependent_variance_vs_budget.pdf
+```
+
+A different font/Matplotlib environment may require `--skip-reference-check`;
+this produces `RENDERED_UNCHECKED`, not a verified visual match.
+The approved Main 2/4/5 PDFs were created with Matplotlib 3.10.5 and are retained
+unchanged under `reproduction/figures/published/`. They can differ in rendering
+from the 3.11.1 references under `figures/rebuilt/`. Byte-identity checks
+refer to the rebuild references, not to all approved PDFs.
+
+## Current changes and source selection
+
+- Figure 3 reads the current empirical50 error/noise data, displays ten inverse
+  accuracy points per curve, and uses the approved labels and frameless legend.
+- Figure 4 keeps its three-panel plot; the BeH2/N2 SRDD bias values are caption
+  metadata in its artifact description.
+- SI Figure 1 contains joined variance/inverted-bias panels with left bias
+  axes. SI (e,f) omit T=12 from all comparison curves and bars; Main 5 and the
+  raw records retain it. The derived bias CSV contains 38 values.
+- Main 3--5/SI axes omit Ha/Ha-squared suffixes, required-sample labels are
+  `Required samples`, and panel letters are nonbold.
+- Random GPD data use stabilizer-calibrated balanced prefix selection; the
+  historical GPD rows in the Pauli replay CSV are not used as current results.
+
+This is plot reproduction from frozen, audited results, not a fresh
+Hamiltonian optimization, calibration or Born-outcome replay. The algorithm
+package in `src/mpqc_measurement/` is unchanged by the plotting update.
+The published code does not contain numerical tables, research-audit records,
+figure binaries, the complete simulation archive or private manuscript/reviewer
+documents. `required_inputs.json` lists local filenames and hashes only. See
+[FIGURE_REPRODUCTION.md](reproduction/FIGURE_REPRODUCTION.md) for the full
+figure-to-data mapping, statistical definitions and local TeX/response paths.
+
+## Artifact folders
+
+- `main/fig01_framework`: reviewed static SRDD/GPD schematic and locally supplied source PPTX.
+- `main/fig02_molecular_errors`: H4/H6 errors.
+- `main/fig03_additional_molecules`: BeH2/N2 error, inverse accuracy and noise.
+- `main/fig04_resource_summary`: variance, measurement settings and samples.
+- `main/fig05_random_hamiltonian_errors`: sparse/dense empirical errors.
+- `supp/fig_s1_state_dependent_variance`: exact variance and absolute bias.
+- `supp/table_s1_state_dependent_variance`, `table_s2_required_measurements`,
+  `table_s3_cnot_counts`: existing CSV-to-TeX table builders. These retain
+  their explicit `--input` interfaces; they are not new plots or new data.
+
+Each figure's `artifact.json` routes to the canonical renderer, preventing
+the former generic line/bar templates from silently drawing an older layout.

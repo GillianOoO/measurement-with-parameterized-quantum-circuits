@@ -9,6 +9,9 @@ import json
 import math
 import os
 import tempfile
+import subprocess
+import sys
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -301,10 +304,35 @@ def build_matrix_table(config: dict[str, Any], rows: list[dict[str, str]], outpu
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("artifact", type=Path, help="artifact directory containing artifact.json")
-    parser.add_argument("--input", required=True, type=Path)
+    parser.add_argument("--input", type=Path, help="Required for CSV table/custom builders; not used for current frozen figures.")
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--skip-reference-check", action="store_true")
     args = parser.parse_args()
     config = json.loads((args.artifact / "artifact.json").read_text(encoding="utf-8"))
+    if config["kind"] == "canonical":
+        if args.input is not None:
+            parser.error("Current figure builders use the bundled audited data; omit --input. See the artifact README.")
+        if args.output.suffix.lower() != ".pdf":
+            parser.error("Current figure output must be a .pdf path; a PNG is also emitted for numerical figures.")
+        from build_all import verify_bundle
+        verify_bundle()
+        bundle = Path(__file__).resolve().parent / "reproduction"
+        if args.output.resolve().is_relative_to(bundle):
+            parser.error("Write outputs outside the frozen reproduction bundle")
+        work = args.output.resolve().parent / (args.output.stem + "_rebuild")
+        command = [sys.executable, str(bundle / "reproduce_manuscript_figures.py"),
+                   "--figures", config["figure_id"], "--output", str(work)]
+        if args.skip_reference_check:
+            command.append("--skip-reference-check")
+        subprocess.run(command, check=True)
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(work / "pdf" / config["filename"], args.output)
+        preview = work / "png" / Path(config["filename"]).with_suffix(".png")
+        if preview.exists():
+            shutil.copy2(preview, args.output.with_suffix(".png"))
+        return
+    if args.input is None:
+        parser.error("--input is required for CSV table/custom builders")
     rows = read_rows(args.input)
     if config["kind"] == "line":
         build_line_figure(config, rows, args.output)

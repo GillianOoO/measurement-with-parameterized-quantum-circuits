@@ -1,13 +1,31 @@
 {
-  "kind": "bar",
-  "panel_field": "plot_label",
-  "method_field": "method",
-  "figsize": [7.25, 2.75],
-  "panel_values": ["H4", "H6", "BeH2", "N2"],
-  "methods": ["SRDD", "FC-IMA", "OGM", "SG", "Derand"],
-  "panels": [
-    {"title": "State-dependent sampling variance", "y_field": "sampling_variance", "ylabel": "Variance (Ha^2)", "yscale": "log"},
-    {"title": "Distinct allocations", "y_field": "decomposition_items", "ylabel": "Number of allocations", "yscale": "log"},
-    {"title": "Projected RMSE = 0.01 Ha", "y_field": "shots_to_error_0p01", "ylabel": "Required measurements", "yscale": "log"}
-  ]
+  "kind": "canonical",
+  "figure_id": "4",
+  "filename": "molecular_resource_summary.pdf",
+  "panel_order": [
+    "Exact variance",
+    "Distinct measurement settings",
+    "Required samples"
+  ],
+  "molecules": [
+    "H4",
+    "H6",
+    "BeH2",
+    "N2"
+  ],
+  "methods": [
+    "SRDD",
+    "FC-IMA",
+    "OGM",
+    "SG",
+    "Derand"
+  ],
+  "source_script": "reproduction/code/plotting/plot_figures_2_4_5_and_supp.py",
+  "h4_geometry": "R=1.20 A, 3000 measurements",
+  "target_error": 0.01,
+  "srdd_bias_caption_only": {
+    "BeH2": 8.941657405614478e-7,
+    "N2": 0.0000025943606516420914
+  },
+  "approved_pdf_sha256": "317b1e316abe117dab31ef4807eca7ee1149086f46c45060d5bdb497ceec3218"
 }

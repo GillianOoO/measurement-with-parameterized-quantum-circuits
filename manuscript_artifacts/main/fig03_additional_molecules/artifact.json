@@ -1,17 +1,32 @@
 {
-  "kind": "line",
-  "panel_field": "panel",
-  "method_field": "method",
-  "ncols": 3,
-  "figsize": [7.25, 5.0],
-  "legend_methods": ["SRDD", "FC-IMA", "OGM", "SG", "Derand"],
-  "legend_ncol": 5,
-  "panels": [
-    {"value": "BeH2 error", "title": "BeH2", "x_field": "x", "y_field": "value", "xlabel": "The number of measurements", "ylabel": "Error (Ha)", "xscale": "log"},
-    {"value": "BeH2 required", "title": "BeH2", "x_field": "x", "y_field": "value", "xlabel": "Target error (Ha)", "ylabel": "Required measurements", "xscale": "log"},
-    {"value": "BeH2 noise", "title": "BeH2", "x_field": "x", "y_field": "value", "xlabel": "Two-qubit depolarizing rate", "ylabel": "Error (Ha)"},
-    {"value": "N2 error", "title": "N2", "x_field": "x", "y_field": "value", "xlabel": "The number of measurements", "ylabel": "Error (Ha)", "xscale": "log"},
-    {"value": "N2 required", "title": "N2", "x_field": "x", "y_field": "value", "xlabel": "Target error (Ha)", "ylabel": "Required measurements", "xscale": "log"},
-    {"value": "N2 noise", "title": "N2", "x_field": "x", "y_field": "value", "xlabel": "Two-qubit depolarizing rate", "ylabel": "Error (Ha)"}
-  ]
+  "kind": "canonical",
+  "figure_id": "3",
+  "filename": "additional_molecular_hamiltonian_errors.pdf",
+  "panel_order": [
+    "BeH2 error",
+    "BeH2 required samples",
+    "BeH2 noise",
+    "N2 error",
+    "N2 required samples",
+    "N2 noise"
+  ],
+  "methods": [
+    "SRDD",
+    "FC-IMA",
+    "OGM",
+    "SG",
+    "Derand"
+  ],
+  "source_script": "reproduction/code/plotting/plot_figure_3.py",
+  "error_source": "reproduction/data/shared_processed/figure3/empirical50/fig3_empirical_curves.csv",
+  "inverse_source": "reproduction/data/shared_processed/figure3/fig3_extended_curves.csv",
+  "repeats_per_error_point": 50,
+  "inverse_display_points_per_method": 10,
+  "noise_range": [
+    0,
+    0.003
+  ],
+  "noise_measurements": 3000,
+  "error_band": false,
+  "required_samples_ylabel": "Required samples"
 }

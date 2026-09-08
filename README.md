@@ -39,6 +39,17 @@ dependencies with
 python -m pip install -e ".[artifacts]"
 ```
 
+The current manuscript plotters and a hash-indexed local-input importer are
+included. First run `python manuscript_artifacts/prepare_inputs.py --archive-root
+PATH_TO_paper_reproducibility`, then
+`python manuscript_artifacts/build_all.py --output build/manuscript`.
+Numerical tables, research-audit records and reviewed figure assets remain local
+and are not distributed in this code-only branch update.
+See the artifact guide for the reference plotting environment, current SI bias
+histograms, Figure 3 empirical50 curves, output locations and validation.
+This plotting workflow does not rerun the decomposition algorithms or the full
+measurement simulations.
+
 ## Python API
 
 ```python

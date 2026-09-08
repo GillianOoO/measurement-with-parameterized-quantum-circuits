@@ -1,0 +1,28 @@
+{
+  "files": {
+    "FIGURE_REPRODUCTION.md": "47aad38090cc65344a0231c8347abb3fbeb90b561baf0460a2cb05d1cae736c9",
+    "code/plotting/README.md": "4abe126a9ee68ce2cfad5318dff9f60adb7276ba88426f51a5ebc6350ca1aff9",
+    "code/plotting/plot_figure_3.py": "0d0e13c9926a8211ce3a289a02a84bcbb8dbd30892edc04cc01e3614620f478a",
+    "code/plotting/plot_figures_2_4_5_and_supp.py": "5206418ce4320ba4834ce672cdb33ea433af5b5013dedfa933e604b9c2cc456d",
+    "code/plotting/plotting_backend.py": "afe1ca02658dbf129e07618a16a3d08987509162d9e6d1be2d5a134ad6818c04",
+    "reproduce_manuscript_figures.py": "b6b12b521fad5c2cb7f3515eadd09bb495b202d0196685285403c69e9a836a8b",
+    "validation/export_plot_bundle.py": "75c2ba16999511d071389f73aec34a493dce813068e76ad9cf5b893ae1ec7947",
+    "validation/validate_bias_update.py": "a0825bbdb224d3de3e70867ce6bff2850985812ab047e307421adc1e51efb08e"
+  },
+  "not_included": [
+    "private manuscript/reviewer documents",
+    "backup ZIPs",
+    "runtimes and caches",
+    "full raw optimization and measurement replay archive"
+  ],
+  "reference_environment": {
+    "matplotlib": "3.11.1",
+    "numpy": "2.5.2",
+    "serif_font": "times.ttf",
+    "serif_font_sha256": "931c5de5c70401d9324d5014c123802b4fb753000360ceb2f56c589403cd58c5"
+  },
+  "required_inputs": "required_inputs.json",
+  "schema": 2,
+  "scope": "Current plotting code; numerical inputs and reviewed assets are supplied locally",
+  "source_archive": "paper_reproducibility"
+}
