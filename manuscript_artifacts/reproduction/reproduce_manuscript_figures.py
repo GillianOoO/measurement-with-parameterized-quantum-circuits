@@ -2,9 +2,8 @@
 """Rebuild every figure used by the current JCTC main and SI manuscripts.
 
 Figures 2--5 and the SI variance figure are rendered from the curated numerical
-tables by the archived plotting programs.  Figure 1 is a manually authored
-schematic, so its reviewed PDF is copied from the archived PPTX/PDF source
-rather than represented as a numerical simulation output.
+tables by the archived plotting programs. Figure 1 uses the reviewed vector
+export of PPTX slide 1, verified against its source and export provenance.
 """
 
 from __future__ import annotations
@@ -118,13 +117,18 @@ def main() -> None:
             raise RuntimeError(f"PNG reference check failed for {stem}")
 
     schematic = PUBLISHED / "main_sketch_revise.pdf"
+    framework_record = None
     if "1" in selected:
-        if not schematic.is_file():
-            raise FileNotFoundError(schematic)
-        shutil.copy2(schematic, pdf_dir / schematic.name)
+        sys.path.insert(0, str(PLOTTING))
+        from export_framework import copy_reviewed
+        framework_record = copy_reviewed(pdf_dir / schematic.name,
+                                         png_dir / "main_sketch_revise.png")
         current_pdfs.append(pdf_dir / schematic.name)
+        current_pngs.append(png_dir / "main_sketch_revise.png")
 
     inputs = {}
+    if framework_record is not None:
+        inputs.update(framework_record["files"])
     for path in audit_paths:
         inputs.update(json.loads(path.read_text(encoding="utf-8"))["inputs"])
     for relative, expected_hash in inputs.items():
@@ -176,11 +180,13 @@ def main() -> None:
         "numerical_figures": comparisons,
         "individual_panels": panel_comparisons,
         "figure_1": {
-            "type": "reviewed static schematic",
+            "type": "reviewed vector export of PPTX slide 1",
             "included": "1" in selected,
             "source_pdf": schematic.relative_to(HERE).as_posix(),
             "source_pdf_sha256": sha256(schematic) if "1" in selected else None,
             "editable_source": "paper/original/Figure1_revised_source.pptx",
+            "provenance": framework_record,
+            "exporter_sha256": sha256(PLOTTING / "export_framework.py"),
         },
         "output_pdfs": {
             path.name: sha256(path) for path in current_pdfs

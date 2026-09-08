@@ -1,0 +1,9 @@
+{
+  "slide": 1,
+  "slide_size_points": [960.0, 540.0],
+  "crop_box_points": [74.375, 299.75, 701.125, 428.875],
+  "preview_dpi": 200,
+  "pptx": "paper/original/Figure1_revised_source.pptx",
+  "pdf": "figures/published/main_sketch_revise.pdf",
+  "png": "figures/published/main_sketch_revise.png"
+}

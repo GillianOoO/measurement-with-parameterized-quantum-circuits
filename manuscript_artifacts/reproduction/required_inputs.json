@@ -61,7 +61,6 @@
     "figures/published/additional_molecular_hamiltonian_errors.png": "5874a645714a2413405602c716aec6aa42ff4033d6e6c3b71502a92c14c6eb7e",
     "figures/published/general_hamiltonian_gpd_average_errors.pdf": "a68ef1b69fc82b390fae2612a1e78904ecb74f1dca434f7fa64e14cb4d8a15b7",
     "figures/published/general_hamiltonian_gpd_average_errors.png": "6b5c83200d861cd6683b964cbed0f26118ad89298fcf58d13ac645fb1154e8ca",
-    "figures/published/main_sketch_revise.pdf": "45a24bef32bfcbb3d8278d16fc0ab86ea35d00c440e527c728edbe28b64c2ffe",
     "figures/published/molecular_hamiltonian_errors.pdf": "63f5b12fd2c7a261b2fa759277a0daccec7106c8e14181b06226ad2e44464274",
     "figures/published/molecular_hamiltonian_errors.png": "3cc958c3af33b875433f2a1575a869611390923bd902de141ca992e6e724a252",
     "figures/published/molecular_resource_summary.pdf": "317b1e316abe117dab31ef4807eca7ee1149086f46c45060d5bdb497ceec3218",
@@ -89,8 +88,7 @@
     "figures/rebuilt/panels/supp_variance_bias_panel_e.png": "3253629785b1e655a60f9a6db6a414497bae2b1a3303759f8866c44c658a6055",
     "figures/rebuilt/panels/supp_variance_bias_panel_f.png": "c67c0bc092cc3056c2bc735b54531808ccfaf7d917b4f7ffa3591d3753266941",
     "figures/rebuilt/supp_state_dependent_variance_vs_budget.pdf": "90bd0d275361a9ec415517e5e0c5d76dcbd76dfcf30cb750b6b93c0947061500",
-    "figures/rebuilt/supp_state_dependent_variance_vs_budget.png": "19451a833576dfad1a8c2f16efd5c1cbe1e9897fa96f2b12559e60473d688d82",
-    "paper/original/Figure1_revised_source.pptx": "dec959144cddeae6208a6b4939d308f3d3068dfd5aef0c27c94f56f57f1d63b2"
+    "figures/rebuilt/supp_state_dependent_variance_vs_budget.png": "19451a833576dfad1a8c2f16efd5c1cbe1e9897fa96f2b12559e60473d688d82"
   },
   "schema": 1,
   "scope": "Required local filenames and hashes only; no numerical table or audit contents"

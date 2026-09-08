@@ -3,14 +3,15 @@
 Run from this directory. The same directory structure is distributed on the
 `codex/manuscript-artifacts-supp-gpd` GitHub branch under
 `manuscript_artifacts/reproduction/`. The GitHub branch distributes code and
-input filenames/hashes, not the numerical tables, audit records or figure assets.
+input filenames/hashes and the Figure 1 PPTX/PDF/PNG. Numerical tables, audit
+records and other figure assets remain locally supplied.
 From the GitHub checkout root, first import your local classified archive:
 
 ```powershell
 python manuscript_artifacts/prepare_inputs.py --archive-root PATH_TO_paper_reproducibility
 ```
 
-Imported data and assets are gitignored. Then run the commands below from
+Imported numerical data and other assets are gitignored. Then run the commands below from
 `manuscript_artifacts/reproduction/`, or use the repository's `build_all.py`.
 
 ```powershell
@@ -19,7 +20,8 @@ python validation/validate_bias_update.py --plot-only --rebuild-dir build/curren
 ```
 
 The first command reproduces all five numerical figures from saved results and
-copies the reviewed Figure 1 PDF. It does not rerun Hamiltonian construction,
+verifies and copies the reviewed Figure 1 PDF/PNG against PPTX slide 1 and its
+export provenance. It does not rerun Hamiltonian construction,
 optimization, calibration or finite-measurement simulations. The second checks
 SI variances and biases against their saved sources, the actual plotted artists,
 and fresh render hashes. Omit `--plot-only` in the local manuscript archive to
@@ -44,7 +46,7 @@ vary between runs. Main 3 and SI 1 use the current renderer in both locations.
 
 | Figure | Filename stem | Plot source and inputs |
 |---|---|---|
-| Main 1 | `main_sketch_revise` | Reviewed static PDF in `figures/published/`; editable source `paper/original/Figure1_revised_source.pptx`. |
+| Main 1 | `main_sketch_revise` | `code/plotting/export_framework.py`; slide 1 of `paper/original/Figure1_revised_source.pptx`, with reviewed PDF/PNG in `figures/published/`. |
 | Main 2 | `molecular_hamiltonian_errors` | `code/plotting/plot_figures_2_4_5_and_supp.py`; H4/H6 processed tables and the audited same-Hamiltonian H4 Pauli rerun. |
 | Main 3 | `additional_molecular_hamiltonian_errors` | `code/plotting/plot_figure_3.py`; empirical50 curves and their manifest in `data/shared_processed/figure3/empirical50/`, plus `fig3_extended_curves.csv` for target-error projections. |
 | Main 4 | `molecular_resource_summary` | Shared plotter; `data/shared_processed/resources/resource_chart_summary.csv` and `variance/` tables. |
@@ -57,6 +59,14 @@ is not changed by rendering. Historical AGPD molecular rows and historical GPD
 rows in the Pauli replay table are excluded by the current plotter.
 
 ## Current display conventions
+
+- Main 1 uses the PPTX first slide, with blank margins cropped from its vector
+  PDF export. `framework_source.json` specifies slide, crop and output paths;
+  `framework_provenance.json` binds the PPTX and PDF/PNG hashes. To regenerate,
+  run `python code/plotting/export_framework.py --mode export --output build/framework_review/main_sketch_revise.pdf`.
+  This requires PowerPoint on Windows, pypdf and Poppler; alternatively supply
+  an uncropped PowerPoint PDF via `--source-pdf`. Review before promoting the
+  exported files. The ordinary reviewed-asset build needs no PowerPoint or pypdf.
 
 - Main 3(a,c,d,f): empirical error from 50 complete estimates per point, not a
   Gaussian or analytic-error surrogate. Panels (b,e) display ten points per

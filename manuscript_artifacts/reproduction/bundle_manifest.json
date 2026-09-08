@@ -1,12 +1,19 @@
 {
   "files": {
-    "FIGURE_REPRODUCTION.md": "47aad38090cc65344a0231c8347abb3fbeb90b561baf0460a2cb05d1cae736c9",
+    "FIGURE_REPRODUCTION.md": "073963b21a9f754cc9769ce3fc9f01b38826e5f28b4cce9b2dcc9abe795e294f",
     "code/plotting/README.md": "4abe126a9ee68ce2cfad5318dff9f60adb7276ba88426f51a5ebc6350ca1aff9",
+    "code/plotting/export_framework.py": "cdbcb4c297c37a25638b215af739e9f8a6f2e522d84c477cc95c5b686898f810",
+    "code/plotting/export_framework_powerpoint.ps1": "656cb9301efac83be6eddf373e1ac51dbedae731f7b31d391aab74b64b5fede9",
+    "code/plotting/framework_provenance.json": "d553f4894361b249757babc199b9c72f67e46acd5741c1eb7392e75ce44db3ab",
+    "code/plotting/framework_source.json": "23cd60c8db80b93fba719988f5d1f7594496f3a25f2fb899784d492d52ca6c57",
     "code/plotting/plot_figure_3.py": "0d0e13c9926a8211ce3a289a02a84bcbb8dbd30892edc04cc01e3614620f478a",
     "code/plotting/plot_figures_2_4_5_and_supp.py": "5206418ce4320ba4834ce672cdb33ea433af5b5013dedfa933e604b9c2cc456d",
     "code/plotting/plotting_backend.py": "afe1ca02658dbf129e07618a16a3d08987509162d9e6d1be2d5a134ad6818c04",
-    "reproduce_manuscript_figures.py": "b6b12b521fad5c2cb7f3515eadd09bb495b202d0196685285403c69e9a836a8b",
-    "validation/export_plot_bundle.py": "75c2ba16999511d071389f73aec34a493dce813068e76ad9cf5b893ae1ec7947",
+    "figures/published/main_sketch_revise.pdf": "4975f5ff01b0e624246f156be86789a98b72286bcce81d9d48622f36a7c88c2d",
+    "figures/published/main_sketch_revise.png": "3891388a08518dfc8695b50e4cac99ae00487c8e63339b8a8ab24c688254e6ce",
+    "paper/original/Figure1_revised_source.pptx": "d0dab4729945e560d5370691bd666992c4900e2a3dc1a4b96fd66616439121d8",
+    "reproduce_manuscript_figures.py": "01166ffb17bfe38f11d5a3bfe63c5ae17a1c7f11c087018c441584ba7204fe35",
+    "validation/export_plot_bundle.py": "26f6314098946d2ec23fa69c640e8feea7179f5a489bd38fa7b34e79d259b2f2",
     "validation/validate_bias_update.py": "a0825bbdb224d3de3e70867ce6bff2850985812ab047e307421adc1e51efb08e"
   },
   "not_included": [
@@ -23,6 +30,6 @@
   },
   "required_inputs": "required_inputs.json",
   "schema": 2,
-  "scope": "Current plotting code; numerical inputs and reviewed assets are supplied locally",
+  "scope": "Current plotting code and framework PPTX/PDF/PNG; numerical inputs and other assets are supplied locally",
   "source_archive": "paper_reproducibility"
 }

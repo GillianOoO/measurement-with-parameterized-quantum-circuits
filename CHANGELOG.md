@@ -1,5 +1,14 @@
 # Changelog
 
+## Framework first-slide export, 2026-09-08
+
+- Use the supplied PPTX first slide for Figure 1, preserving its objects and
+  equations and cropping only blank margins from the vector PDF export.
+- Include the source PPTX and reviewed PDF/PNG, PowerPoint export/crop scripts,
+  source/export hash checks and tests for stale-source detection.
+- Keep numerical datasets private and retain the current GPD/SRDD numerical
+  implementations, fixed-measurement selection rules and Figures 2--5/SI.
+
 ## Manuscript figures, 2026-09-08
 
 - Route all six figure commands to the current archived renderers and supply

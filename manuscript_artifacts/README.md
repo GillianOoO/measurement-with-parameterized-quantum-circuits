@@ -3,7 +3,8 @@
 The current main-text Figures 1--5 and SI Figure 1 use the canonical archived
 plotters in `reproduction/code/plotting/`. Their required numerical inputs, audits and reviewed assets are supplied
 from the user's local classified archive. This branch publishes code and input
-filenames/hashes, not the detailed research datasets or audit records.
+filenames/hashes and the Figure 1 PPTX/PDF/PNG, not the detailed research datasets
+or audit records.
 
 ## Rebuild and validate
 
@@ -18,11 +19,13 @@ python manuscript_artifacts/build_all.py --output build/manuscript
 python manuscript_artifacts/reproduction/validation/validate_bias_update.py --plot-only --rebuild-dir build/manuscript
 ```
 
-Eight code/document hashes and 91 locally imported input/asset hashes are checked
-before rendering. Imported data, audits and figure assets are gitignored. Five numerical
+Code, documentation, framework assets and locally imported input/asset hashes
+are checked before rendering. Imported numerical data, audits and other figure
+assets are gitignored. Five numerical
 combination PNGs and twelve Figure 3/SI panels are checked against the archived
-rebuild references. Figure 1 is copied from its reviewed PDF, with the editable
-PPTX retained in the local archive. Output PDFs, PNGs, individual panels, presentation CSVs, input
+rebuild references. Figure 1 uses the source-verified first-slide PDF/PNG export;
+the editable PPTX is included. See [its export instructions](main/fig01_framework/README.md).
+Output PDFs, PNGs, individual panels, presentation CSVs, input
 hashes and runtime information are saved in the chosen output directory.
 
 Use `--figures s1` for only SI Figure 1, or an individual artifact command:
@@ -56,14 +59,14 @@ This is plot reproduction from frozen, audited results, not a fresh
 Hamiltonian optimization, calibration or Born-outcome replay. The algorithm
 package in `src/mpqc_measurement/` is unchanged by the plotting update.
 The published code does not contain numerical tables, research-audit records,
-figure binaries, the complete simulation archive or private manuscript/reviewer
+numerical figure binaries, the complete simulation archive or private manuscript/reviewer
 documents. `required_inputs.json` lists local filenames and hashes only. See
 [FIGURE_REPRODUCTION.md](reproduction/FIGURE_REPRODUCTION.md) for the full
 figure-to-data mapping, statistical definitions and local TeX/response paths.
 
 ## Artifact folders
 
-- `main/fig01_framework`: reviewed static SRDD/GPD schematic and locally supplied source PPTX.
+- `main/fig01_framework`: first-slide SRDD/GPD schematic, editable PPTX and vector PDF exporter.
 - `main/fig02_molecular_errors`: H4/H6 errors.
 - `main/fig03_additional_molecules`: BeH2/N2 error, inverse accuracy and noise.
 - `main/fig04_resource_summary`: variance, measurement settings and samples.

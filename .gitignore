@@ -11,8 +11,15 @@ build/
 dist/
 results/
 manuscript_artifacts/reproduction/data/
-manuscript_artifacts/reproduction/figures/
-manuscript_artifacts/reproduction/paper/
+manuscript_artifacts/reproduction/figures/*
+!manuscript_artifacts/reproduction/figures/published/
+manuscript_artifacts/reproduction/figures/published/*
+!manuscript_artifacts/reproduction/figures/published/main_sketch_revise.pdf
+!manuscript_artifacts/reproduction/figures/published/main_sketch_revise.png
+manuscript_artifacts/reproduction/paper/*
+!manuscript_artifacts/reproduction/paper/original/
+manuscript_artifacts/reproduction/paper/original/*
+!manuscript_artifacts/reproduction/paper/original/Figure1_revised_source.pptx
 manuscript_artifacts/reproduction/validation/current_bias_validation.json
 manuscript_artifacts/reproduction/validation/matplotlib/
 *.log

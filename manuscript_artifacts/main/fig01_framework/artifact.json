@@ -4,5 +4,8 @@
   "filename": "main_sketch_revise.pdf",
   "source": "reproduction/figures/published/main_sketch_revise.pdf",
   "editable_source": "reproduction/paper/original/Figure1_revised_source.pptx",
-  "construction": "copy the reviewed static schematic; no PDF overlay"
+  "construction": "source-verified vector export of PPTX slide 1, cropped to the diagram",
+  "slide": 1,
+  "exporter": "reproduction/code/plotting/export_framework.py",
+  "provenance": "reproduction/code/plotting/framework_provenance.json"
 }
