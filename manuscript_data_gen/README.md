@@ -29,7 +29,7 @@ CSV files remain intact; current plotters select only the reported methods.
 Private manuscript/response drafts, revision notes, logs, caches and QA
 screenshots are excluded.
 
-## 2. Reconstruct all main and SI figures
+## 2. Reconstruct the main and SI numerical figures
 
 ```powershell
 python -m pip install -e ".[artifacts]"
@@ -49,10 +49,8 @@ Outputs are `build/manuscript/pdf/`, `png/`, `rendered/panels/`,
 the current main circuit-resource table and SI required-measurement table.
 For tables alone, run `python manuscript_data_gen/build_tables.py`.
 The runner checks five numerical combination
-PNGs and twelve individual panels against saved render references. Figure 1
-copies the hash-verified, reviewed export of the included editable PPTX.
-Re-exporting its first slide requires PowerPoint; ordinary reconstruction does
-not. Main 2/4/5 published PDFs used Matplotlib 3.10.5 and are preserved separately
+PNGs and twelve individual panels against saved render references.
+Main 2/4/5 published PDFs used Matplotlib 3.10.5 and are preserved separately
 from the 3.11.1 render references.
 
 For one figure: `python manuscript_data_gen/build_all.py --figures s1 --output build/si`.

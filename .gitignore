@@ -13,10 +13,7 @@ dist/
 regenerated/
 runs/
 manuscript_data_gen/reproduction/data/
-manuscript_data_gen/reproduction/paper/*
-!manuscript_data_gen/reproduction/paper/original/
-manuscript_data_gen/reproduction/paper/original/*
-!manuscript_data_gen/reproduction/paper/original/Figure1_revised_source.pptx
+manuscript_data_gen/reproduction/paper/
 manuscript_data_gen/reproduction/validation/current_bias_validation.json
 manuscript_data_gen/reproduction/validation/matplotlib/
 *.log

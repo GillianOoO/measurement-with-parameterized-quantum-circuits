@@ -17,8 +17,6 @@ dependencies = [
 gpd = ["jax[cpu]>=0.4.38,<0.7"]
 artifacts = [
   "matplotlib>=3.8,<4",
-  "pypdf>=4,<7",
-  "reportlab>=4,<5",
 ]
 dev = []
 

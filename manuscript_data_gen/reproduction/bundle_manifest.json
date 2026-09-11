@@ -1,6 +1,6 @@
 {
   "files": {
-    "FIGURE_REPRODUCTION.md": "1e73362a286d3905c51424a9d2a29a3f25f79bb199ebd5bacae0332081b0973a",
+    "FIGURE_REPRODUCTION.md": "34cbfe614cf41e362f2dcc4b7cc70c1e1e2a7b98850c2290c425f396435b3129",
     "code/README.md": "10ffcc92da288d1c9b79e6d5bfd0d0d7d94cec79d963ef836dc4e96823f1a487",
     "code/analysis/README.md": "c956016c6476e4cbc208b9186b2a09308b13c80cdf85fa6ffc3c5f709f14dc23",
     "code/analysis/assemble_fig3_empirical50.py": "b51b98f81ce34bd7e6e8de2d6ccf0a8f20eabec67d8fc6790ca8239676662578",
@@ -73,18 +73,11 @@
     "code/methods/srdd/test_large_molecule_calibration_outputs.py": "743f2d2d049b504c3f922cc45730c27c11d6f180816556fa6fc3dd6a57bbb39f",
     "code/methods/srdd/test_shallow_collector_redistribution.py": "1735f89688c1dd260ef914bc4c568517a81388f3bb38c24260e716d08b537958",
     "code/plotting/README.md": "4abe126a9ee68ce2cfad5318dff9f60adb7276ba88426f51a5ebc6350ca1aff9",
-    "code/plotting/export_framework.py": "cdbcb4c297c37a25638b215af739e9f8a6f2e522d84c477cc95c5b686898f810",
-    "code/plotting/export_framework_powerpoint.ps1": "656cb9301efac83be6eddf373e1ac51dbedae731f7b31d391aab74b64b5fede9",
-    "code/plotting/framework_provenance.json": "d553f4894361b249757babc199b9c72f67e46acd5741c1eb7392e75ce44db3ab",
-    "code/plotting/framework_source.json": "23cd60c8db80b93fba719988f5d1f7594496f3a25f2fb899784d492d52ca6c57",
     "code/plotting/plot_figure_3.py": "0d0e13c9926a8211ce3a289a02a84bcbb8dbd30892edc04cc01e3614620f478a",
     "code/plotting/plot_figures_2_4_5_and_supp.py": "5206418ce4320ba4834ce672cdb33ea433af5b5013dedfa933e604b9c2cc456d",
     "code/plotting/plotting_backend.py": "afe1ca02658dbf129e07618a16a3d08987509162d9e6d1be2d5a134ad6818c04",
-    "figures/published/main_sketch_revise.pdf": "4975f5ff01b0e624246f156be86789a98b72286bcce81d9d48622f36a7c88c2d",
-    "figures/published/main_sketch_revise.png": "3891388a08518dfc8695b50e4cac99ae00487c8e63339b8a8ab24c688254e6ce",
-    "paper/original/Figure1_revised_source.pptx": "d0dab4729945e560d5370691bd666992c4900e2a3dc1a4b96fd66616439121d8",
-    "reproduce_manuscript_figures.py": "01166ffb17bfe38f11d5a3bfe63c5ae17a1c7f11c087018c441584ba7204fe35",
-    "validation/export_plot_bundle.py": "26f6314098946d2ec23fa69c640e8feea7179f5a489bd38fa7b34e79d259b2f2",
+    "reproduce_manuscript_figures.py": "5551b4f1a9566279afb359be450d0ecd13f9a0a9c5a0142815d625e7713a8847",
+    "validation/export_plot_bundle.py": "d455f7bf2fb9f15409fa49ec3c41f8f2fc2ea4b017436ae21c14f3636a8156a4",
     "validation/package_data.py": "8bf0733be3f76501afa6f39605b057f145fae586dead5acc578b73c4f20ba378",
     "validation/update_release_manifest.py": "1604a7d39ca4e9bd7357ebbbd33e83afa884e587719f8edff8de2dc6356a5d04",
     "validation/validate_bias_update.py": "a0825bbdb224d3de3e70867ce6bff2850985812ab047e307421adc1e51efb08e"

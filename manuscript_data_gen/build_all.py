@@ -32,7 +32,7 @@ def verify_bundle(*, check_inputs=True):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=HERE.parent / "build/manuscript")
-    parser.add_argument("--figures", nargs="+", choices=("1", "2", "3", "4", "5", "s1"))
+    parser.add_argument("--figures", nargs="+", choices=("2", "3", "4", "5", "s1"))
     parser.add_argument("--skip-reference-check", action="store_true",
                         help="Allow renderer/font differences; the result is marked RENDERED_UNCHECKED.")
     args = parser.parse_args()

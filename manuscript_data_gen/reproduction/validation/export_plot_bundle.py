@@ -27,12 +27,10 @@ def main():
     if destination == ROOT or destination in ROOT.parents:
         raise ValueError("Destination must not be the source archive or its ancestor")
     report = json.loads((args.rebuild_dir / "validation/reproduction_manifest.json").read_text())
-    if report["status"] != "PASS" or set(report["figures_requested"]) != {"1", "2", "3", "4", "5", "s1"}:
+    if report["status"] != "PASS" or set(report["figures_requested"]) != {"2", "3", "4", "5", "s1"}:
         raise ValueError("A complete, verified current rebuild is required")
     if report["entrypoint_sha256"] != sha(ROOT / "reproduce_manuscript_figures.py"):
         raise ValueError("Rebuild report predates the current runner")
-    if report["figure_1"]["exporter_sha256"] != sha(ROOT / "code/plotting/export_framework.py"):
-        raise ValueError("Rebuild report predates the current framework exporter")
     for name, value in report["plotting_programs"].items():
         if sha(ROOT / "code/plotting" / name) != value:
             raise ValueError(f"Rebuild report predates {name}")
@@ -45,15 +43,11 @@ def main():
         "code/plotting/plot_figure_3.py", "code/plotting/plot_figures_2_4_5_and_supp.py",
         "code/plotting/plotting_backend.py", "code/plotting/README.md",
         "validation/validate_bias_update.py", "validation/export_plot_bundle.py",
-        "code/plotting/export_framework.py", "code/plotting/export_framework_powerpoint.ps1",
-        "code/plotting/framework_source.json", "code/plotting/framework_provenance.json",
         "data/BeH2/results/srdd_and_pauli/BeH2/sampling_summary.csv",
         "data/N2/results/srdd_and_pauli/sampling_summary.csv",
         "data/shared_processed/presentations/supp_absolute_bias_by_budget.csv",
         "data/shared_processed/presentations/random_state_dependent_variance_by_budget.csv",
         "data/shared_processed/variance/README.md",
-        "figures/published/main_sketch_revise.pdf", "figures/published/main_sketch_revise.png",
-        "paper/original/Figure1_revised_source.pptx",
     })
     for stem, item in report["numerical_figures"].items():
         for location in ("rebuilt", "published"):
@@ -73,11 +67,8 @@ def main():
                 raise ValueError(f"Stale panel reference: {relative}")
             selected.add(relative)
     hashes = {relative: sha(ROOT / relative) for relative in sorted(selected)}
-    public_framework = {"paper/original/Figure1_revised_source.pptx",
-                        "figures/published/main_sketch_revise.pdf",
-                        "figures/published/main_sketch_revise.png"}
     external = {p: h for p, h in hashes.items()
-                if p.split("/")[0] in {"data", "figures", "paper"} and p not in public_framework}
+                if p.split("/")[0] in {"data", "figures"}}
     code_files = {p: h for p, h in hashes.items() if p not in external}
     copied = hashes if args.include_local_inputs else code_files
     previous_path = destination / "bundle_manifest.json"
@@ -87,7 +78,7 @@ def main():
         if target.exists() and sha(target) not in {value, previous.get(relative)}:
             raise ValueError(f"Preserving an unrecognized destination edit: {target}")
     manifest = {
-        "schema": 2, "scope": "Current plotting code and framework PPTX/PDF/PNG; numerical inputs and other assets are supplied locally",
+        "schema": 2, "scope": "Current numerical plotting code; numerical inputs and assets are supplied separately",
         "source_archive": "paper_reproducibility", "files": code_files,
         "required_inputs": "required_inputs.json",
         "reference_environment": report["environment"],
@@ -98,8 +89,7 @@ def main():
         for relative in copied:
             target = destination / relative
             target.parent.mkdir(parents=True, exist_ok=True)
-            # Leave an identical user source untouched, including PPTX files
-            # that are currently open in PowerPoint.
+            # Leave an identical user source untouched.
             if not target.is_file() or sha(target) != hashes[relative]:
                 shutil.copy2(ROOT / relative, target)
         previous_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")

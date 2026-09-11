@@ -49,8 +49,8 @@ python manuscript_data_gen/materialize_data.py
 python manuscript_data_gen/build_all.py --output build/manuscript
 ```
 
-The framework's editable PPTX and reviewed PDF/PNG are included. The figure
-builder reconstructs plots from frozen results; it does not rerun nonlinear
+The figure builder reconstructs the main Figures 2--5 and SI numerical plots
+from frozen results; it does not rerun nonlinear
 optimization. For experiment entry points, dependencies and the distinction
 between verified replay and de novo simulation, see
 [the reproduction guide](manuscript_data_gen/README.md) and

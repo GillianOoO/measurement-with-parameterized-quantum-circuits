@@ -314,10 +314,6 @@ def main() -> None:
             parser.error("Current figure builders use the bundled audited data; omit --input. See the artifact README.")
         if args.output.suffix.lower() != ".pdf":
             parser.error("Current figure output must be a .pdf path; a PNG is also emitted.")
-        if config["figure_id"] == "1":
-            subprocess.run([sys.executable, str(Path(__file__).resolve().parent / "main/fig01_framework/build.py"),
-                            "--output", str(args.output.resolve())], check=True)
-            return
         from build_all import verify_bundle
         verify_bundle()
         bundle = Path(__file__).resolve().parent / "reproduction"

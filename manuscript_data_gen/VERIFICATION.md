@@ -10,7 +10,7 @@ retain their original hashes. Small, machine-readable evidence is in
 
 | Scope | Result |
 |---|---|
-| Main Figures 1–5 and SI Figure 1 | All six reconstructed. Five numerical combination PNGs and twelve subpanel PNGs exactly match the saved reference renderer; Figure 1's PPTX/export hashes verified. |
+| Main Figures 2–5 and SI Figure 1 | All five numerical combination PNGs and twelve subpanel PNGs exactly match the saved reference renderer. |
 | Figure 2 | All 148 input/summary values reproduced from 17,000 archived repeated estimates, including recovered H6 Pauli records; maximum RMSE difference 1.39e-17. |
 | Figure 3 noisy SRDD/FC-IMA sampling | All 209 setting/group jobs freshly run under the frozen designs; all outcome and contribution arrays exactly match the saved arrays. |
 | Figure 3 empirical errors | All 150 points reconstructed from 7,500 complete estimates; maximum RMSE difference 1.33e-15. Zero-noise and Pauli estimates are the saved repetitions, not newly optimized experiments. |
@@ -40,7 +40,7 @@ original Matplotlib 3.10.5 rendering. Times New Roman is not redistributed.
   compilation checks passed.
 - Six SRDD collector/calibration tests, 24 FC tests, six Derand tests, 17
   gate/noise tests, a 200,000-draw SRDD check and 32 FC fault-propagation checks
-  passed. All 51 root package/release tests also passed with optional JAX installed.
+  passed. The root package/release tests also passed with optional JAX installed.
 - Every released archive and every extracted numerical file is hash-verified.
   The original 256 MB H6 matrix is included losslessly; no matrix truncation
   or numerical rounding was performed.

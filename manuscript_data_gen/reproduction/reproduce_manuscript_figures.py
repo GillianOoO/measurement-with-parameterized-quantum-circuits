@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Rebuild every figure used by the current JCTC main and SI manuscripts.
+"""Rebuild the numerical figures used by the current JCTC main and SI manuscripts.
 
 Figures 2--5 and the SI variance figure are rendered from the curated numerical
-tables by the archived plotting programs. Figure 1 uses the reviewed vector
-export of PPTX slide 1, verified against its source and export provenance.
+tables by the archived plotting programs.
 """
 
 from __future__ import annotations
@@ -22,7 +21,6 @@ import time
 HERE = Path(__file__).resolve().parent
 PLOTTING = HERE / "code" / "plotting"
 REFERENCE = HERE / "figures" / "rebuilt"
-PUBLISHED = HERE / "figures" / "published"
 DEFAULT_OUTPUT = HERE / "build" / "current_figures"
 
 NUMERICAL_STEMS = (
@@ -50,8 +48,8 @@ def run(command: list[str], environment: dict[str, str]) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    parser.add_argument("--figures", nargs="+", choices=("1", *FIGURE_STEMS),
-                        default=["1", *FIGURE_STEMS], help="Default: every current main/SI figure.")
+    parser.add_argument("--figures", nargs="+", choices=tuple(FIGURE_STEMS),
+                        default=list(FIGURE_STEMS), help="Default: all main/SI numerical figures.")
     parser.add_argument(
         "--skip-reference-check",
         action="store_true",
@@ -92,8 +90,6 @@ def main() -> None:
     comparisons: dict[str, dict[str, object]] = {}
     current_pdfs, current_pngs = [], []
     for key in selected:
-        if key == "1":
-            continue
         stem = FIGURE_STEMS[key]
         source_png = rendered / f"{stem}.png"
         source_pdf = rendered / f"{stem}.pdf"
@@ -116,19 +112,7 @@ def main() -> None:
         if not args.skip_reference_check and exact is not True:
             raise RuntimeError(f"PNG reference check failed for {stem}")
 
-    schematic = PUBLISHED / "main_sketch_revise.pdf"
-    framework_record = None
-    if "1" in selected:
-        sys.path.insert(0, str(PLOTTING))
-        from export_framework import copy_reviewed
-        framework_record = copy_reviewed(pdf_dir / schematic.name,
-                                         png_dir / "main_sketch_revise.png")
-        current_pdfs.append(pdf_dir / schematic.name)
-        current_pngs.append(png_dir / "main_sketch_revise.png")
-
     inputs = {}
-    if framework_record is not None:
-        inputs.update(framework_record["files"])
     for path in audit_paths:
         inputs.update(json.loads(path.read_text(encoding="utf-8"))["inputs"])
     for relative, expected_hash in inputs.items():
@@ -179,15 +163,6 @@ def main() -> None:
         },
         "numerical_figures": comparisons,
         "individual_panels": panel_comparisons,
-        "figure_1": {
-            "type": "reviewed vector export of PPTX slide 1",
-            "included": "1" in selected,
-            "source_pdf": schematic.relative_to(HERE).as_posix(),
-            "source_pdf_sha256": sha256(schematic) if "1" in selected else None,
-            "editable_source": "paper/original/Figure1_revised_source.pptx",
-            "provenance": framework_record,
-            "exporter_sha256": sha256(PLOTTING / "export_framework.py"),
-        },
         "output_pdfs": {
             path.name: sha256(path) for path in current_pdfs
         },
