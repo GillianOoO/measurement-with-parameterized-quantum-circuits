@@ -1,2 +1,2 @@
 # Frozen audit hashes include the original line endings of CSV/JSON/code files.
-manuscript_artifacts/reproduction/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+manuscript_data_gen/reproduction/** -text whitespace=trailing-space,space-before-tab,cr-at-eol

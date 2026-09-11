@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "scope": "Rebuilt from released exact variance, bias, frozen circuit and allocation records",
+  "projected_measurement_entries": 18,
+  "circuit_resource_rows": 4,
+  "inverse_accuracy_points": 1208,
+  "simulation_refitted": false,
+  "inputs": {
+    "fully_commuting/BeH2_N2_FC_IMA/error_eval/results/BeH2/summary.json": "c291e98da2c3ac79bceb1e2e67b1ee29f8760e8afccf9acbfcd97311f22f51ed",
+    "fully_commuting/BeH2_N2_FC_IMA/error_eval/results/N2/summary.json": "334eeded72bd94d9bc9e20e99586e7a01e79827d758abe88930d35086c97ec48",
+    "fully_commuting/BeH2_N2_FC_IMA/noise_eval/results/BeH2/circuit_audit.csv": "064d72044848f89ca9269a6d80bd748804d1ec11c35db1ae0a1e1d95f526927e",
+    "fully_commuting/BeH2_N2_FC_IMA/noise_eval/results/N2/circuit_audit.csv": "6deed141e5881965578d1e83d93fe9de7c8e7f68136bc3f10fe9055f3e5664d7",
+    "shared_processed/figure3/empirical50/BeH2_settings.npz": "7c3060963ec8327e0c5fbeac71280e679e48b6433c8ce3b3e3810d8417960416",
+    "shared_processed/figure3/empirical50/N2_settings.npz": "87308d76000f0affb84da5d9fbaac5df1c519347dcd396a746a4c9ac97a1efc6",
+    "shared_processed/figure3/fig3_extended_curves.csv": "ab5b5bfd8abdd29bb115b913d0d1549123bff3429007fd2f9c6395197cc349e9",
+    "shared_processed/resources/resource_chart_summary.csv": "f037f4eaf35b5719c8bc312e256881898a8541eeb6f02637499a3f1f19089a6a",
+    "shared_processed/variance/state_dependent_variance_T3000.csv": "6365b3b7b23148f724d6dd2221f51243cdc69af6b1647c5204bc08f5acadfd0d"
+  },
+  "outputs": {
+    "fig3_inverse_accuracy.csv": "9cb713a0bbe136ddadd449092d23c8f01a6baf4b6162e53abfbd787a139bae5b",
+    "main_circuit_resources.csv": "e526018d34a3b6bac0072834f4f3316434e6cb1c3dc31a4fe8eb5e49df6adb06",
+    "main_circuit_resources.tex": "916a3a41c74f9536d4f4a91b0e0daf4fe93f26917ffe1f8209996f4dcfbebe03",
+    "main_resource_and_si_accuracy.csv": "267e5db6f3bc12c21e90ffa695c9fc34868ac1e24d039ab7363a631b59f0fd4e",
+    "si_required_measurements.tex": "b1cc07e0bbcef219de7bdd70d1bf7b8d6d8008bb75adedcc4b3bc00e9352b568"
+  }
+}

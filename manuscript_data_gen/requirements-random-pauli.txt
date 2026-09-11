@@ -1,0 +1,3 @@
+# Verified fixed-schedule Fig. 5 Pauli replay, Python 3.14.7.
+numpy==2.5.2
+scipy==1.18.0

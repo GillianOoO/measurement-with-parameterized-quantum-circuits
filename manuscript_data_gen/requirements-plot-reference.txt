@@ -1,0 +1,4 @@
+# Exact saved-render reference environment, Python 3.14.7.
+# Times New Roman must be installed separately; it is not redistributed.
+numpy==2.5.2
+matplotlib==3.11.1

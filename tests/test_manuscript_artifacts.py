@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
-ARTIFACTS = ROOT / "manuscript_artifacts"
+ARTIFACTS = ROOT / "manuscript_data_gen"
 
 
 class ManuscriptArtifactsTests(unittest.TestCase):

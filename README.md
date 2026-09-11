@@ -1,6 +1,6 @@
 # Measurement with parameterized quantum circuits
 
-Private research code for fixed-shot expectation-value estimation with two
+Research code for fixed-number-of-measurements expectation-value estimation with two
 rotated-diagonal decompositions:
 
 - **GPD** — Greedy Projection Decomposition with sequential full-diagonal
@@ -32,24 +32,53 @@ python -m pip install -e .
 ```
 
 The publication figure and table builders are organized by artifact under
-[`manuscript_artifacts`](manuscript_artifacts/README.md). Install their optional
+[`manuscript_data_gen`](manuscript_data_gen/README.md). Install their optional
 dependencies with
 
 ```powershell
 python -m pip install -e ".[artifacts]"
 ```
 
-The current manuscript plotters and a hash-indexed local-input importer are
-included. First run `python manuscript_artifacts/prepare_inputs.py --archive-root
-PATH_TO_paper_reproducibility`, then
-`python manuscript_artifacts/build_all.py --output build/manuscript`.
-Numerical tables, research-audit records and numerical figure assets remain local.
-The framework's editable PPTX and reviewed PDF/PNG are included. Rebuild Figure 1
-without numerical inputs using `python manuscript_artifacts/main/fig01_framework/build.py --output build/main_sketch_revise.pdf`.
-See the artifact guide for the reference plotting environment, current SI bias
-histograms, Figure 3 empirical50 curves, output locations and validation.
-This plotting workflow does not rerun the decomposition algorithms or the full
-measurement simulations.
+The main-branch [manuscript_data_gen](manuscript_data_gen/README.md) directory
+contains the manuscript experiment scripts, losslessly compressed numerical
+inputs and saved results, and figure/table builders. No private local archive
+is required to reconstruct the reported plots:
+
+```powershell
+python manuscript_data_gen/materialize_data.py
+python manuscript_data_gen/build_all.py --output build/manuscript
+```
+
+The framework's editable PPTX and reviewed PDF/PNG are included. The figure
+builder reconstructs plots from frozen results; it does not rerun nonlinear
+optimization. For experiment entry points, dependencies and the distinction
+between verified replay and de novo simulation, see
+[the reproduction guide](manuscript_data_gen/README.md) and
+[verification status](manuscript_data_gen/VERIFICATION.md).
+
+## Paper and citation
+
+This repository accompanies the updated manuscript of
+[Expectation value estimation with parametrized quantum circuits](https://arxiv.org/abs/2407.19499)
+by Bujiao Wu, Lingyu Kong, Yuxuan Yan, Fuchuan Wei, and Zhenhuan Liu.
+**The arXiv paper is to be updated to reflect the current manuscript and
+GPD/SRDD results.** The currently available arXiv version should not be taken
+as an exact description of every implementation or figure in this repository.
+
+```bibtex
+@article{wu2024expectation,
+  title = {Expectation value estimation with parametrized quantum circuits},
+  author = {Wu, Bujiao and Kong, Lingyu and Yan, Yuxuan and Wei, Fuchuan and Liu, Zhenhuan},
+  year = {2024},
+  eprint = {2407.19499},
+  archivePrefix = {arXiv},
+  primaryClass = {quant-ph},
+  doi = {10.48550/arXiv.2407.19499},
+  url = {https://arxiv.org/abs/2407.19499}
+}
+```
+
+For reproducibility, also record the repository commit used for a calculation.
 
 ## Python API
 
@@ -188,6 +217,21 @@ The paper periodic-iSWAP matching is defined for even qubit counts. Odd counts
 are rejected unless `odd_qubit_mode="open-chain"` (CLI:
 `--odd-open-chain`) is explicitly requested and recorded as an extension.
 
+iSWAP is a native two-qubit gate and is applied directly, without CNOT
+synthesis. For even n and L entangling layers, each setting contains
+3n(L+1) angles and nL/2 iSWAP gates at entangling depth L. At n=4, L=4 this
+means 60 angles, 8 native iSWAP gates, depth 4, and zero CNOTs in the GPD
+measurement ansatz. Preparation, single-qubit gates, routing and readout
+are excluded from these entangling resources.
+
+GPD results include `metadata["gate_resources_per_setting"]` and
+`metadata["executed_gate_resources"]`. Executed counts use the actual integer
+allocation and separate `cnot_gate_budget` and `iswap_gate_budget`;
+`two_qubit_gate_budget` is their unweighted sum. A scalar-only result has
+no executable setting and zero executed gates. Resource helpers are in
+`src/mpqc_measurement/resources.py`; the legacy AGPD open-chain helper
+retains its own matching pattern and is not the periodic GPD ansatz.
+
 ### SRDD
 
 For electronic tensors, every positive rank is independently optimized at all
@@ -302,5 +346,7 @@ SRDD depth selection, nonzero electronic tensors, greedy collector equality,
 safe input/output contracts, fragment replay, and state-resolved error
 evaluation.
 
-This repository is private research software and currently carries no
-open-source license.
+No repository-wide open-source license has yet been specified. Third-party
+notices and applicable upstream licenses are retained in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Public availability alone does
+not grant a new license to third-party code.

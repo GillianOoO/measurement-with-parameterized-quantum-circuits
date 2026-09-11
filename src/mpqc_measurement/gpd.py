@@ -11,6 +11,7 @@ import numpy as np
 from ._version import __version__
 from .allocation import evaluate_error, integer_range_allocation, require_positive_integer
 from .models import DecompositionResult, Fragment, HamiltonianData
+from .resources import gpd_gate_resources, summarize_gate_resources
 from .selection import (
     CALIBRATION_SIZES,
     FrontierPoint,
@@ -89,7 +90,7 @@ def _canonical_fragment_key(jax, base_seed: int, k: int):
 
 
 class _CircuitActions:
-    """Dense operator/state actions from the manuscript GPD implementation."""
+    """Dense operator/state actions with native iSWAP gates (no CNOT synthesis)."""
 
     def __init__(self, n_qubits: int, n_layers: int, odd_qubit_mode: str):
         self.jax, self.jnp = _jax_modules()
@@ -440,6 +441,19 @@ def build_gpd_frontier(
     return frontier
 
 
+def _gate_metadata(n_qubits: int, config: GPDConfig, allocation) -> dict:
+    resource = gpd_gate_resources(n_qubits, config.paper_depth, config.odd_qubit_mode)
+    return {
+        "gate_resources_per_setting": (
+            {**resource.as_dict(), "continuous_angles": 3 * n_qubits * (config.paper_depth + 1)}
+            if len(allocation) else None
+        ),
+        "executed_gate_resources": summarize_gate_resources(
+            [resource] * len(allocation), allocation
+        ),
+    }
+
+
 def fit_gpd(
     data: HamiltonianData,
     shots: int,
@@ -468,6 +482,7 @@ def fit_gpd(
                 "package_version": __version__,
                 "input_hamiltonian_sha256": data.hamiltonian_sha256,
                 "constant_hamiltonian": True,
+                **_gate_metadata(data.n_qubits, settings, []),
                 "unused_shots": total_shots,
                 "target_state_used_for_construction": False,
             },
@@ -503,6 +518,7 @@ def fit_gpd(
             "input_hamiltonian_sha256": data.hamiltonian_sha256,
             "unused_shots": total_shots - int(np.sum(allocation)),
             "selection": selection,
+            **_gate_metadata(data.n_qubits, settings, allocation),
             "frontier_terminal_size": frontier[-1].size,
             "selected_at_frontier_endpoint": point.size == frontier[-1].size,
             "frontier": frontier[-1].metadata.get("frontier_audit", {}),

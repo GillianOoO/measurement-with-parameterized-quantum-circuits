@@ -1,0 +1,147 @@
+{
+  "status": "PASS",
+  "scope": "Fresh Born outcomes from published frozen Pauli schedules; GPD checked separately",
+  "cases": 10,
+  "repetitions": 17500,
+  "instance_budget_method_rows": 350,
+  "figure5_pauli_points": 70,
+  "seconds": 15.721554499992635,
+  "environment": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scipy": "1.18.0"
+  },
+  "checks": [
+    {
+      "slug": "sparse4_seed0_1",
+      "maximum_estimate_difference": 0.0,
+      "maximum_analytic_variance_difference": 1.3877787807814457e-16,
+      "matches_within_tolerance": true
+    },
+    {
+      "slug": "sparse4_seed0_2",
+      "maximum_estimate_difference": 0.0,
+      "maximum_analytic_variance_difference": 6.938893903907228e-18,
+      "matches_within_tolerance": true
+    },
+    {
+      "slug": "sparse4_seed0_3",
+      "maximum_estimate_difference": 0.0,
+      "maximum_analytic_variance_difference": 3.469446951953614e-18,
+      "matches_within_tolerance": true
+    },
+    {
+      "slug": "sparse4_seed0_4",
+      "maximum_estimate_difference": 0.0,
+      "maximum_analytic_variance_difference": 5.551115123125783e-17,
+      "matches_within_tolerance": true
+    },
+    {
+      "slug": "sparse4_seed0_5",
+      "maximum_estimate_difference": 0.0,
+      "maximum_analytic_variance_difference": 3.469446951953614e-18,
+      "matches_within_tolerance": true
+    },
+    {
+      "slug": "dense4_seed0_1",
+      "maximum_estimate_difference": 0.0,
+      "maximum_analytic_variance_difference": 2.1316282072803006e-14,
+      "matches_within_tolerance": true
+    },
+    {
+      "slug": "dense4_seed0_2",
+      "maximum_estimate_difference": 0.0,
+      "maximum_analytic_variance_difference": 3.552713678800501e-15,
+      "matches_within_tolerance": true
+    },
+    {
+      "slug": "dense4_seed0_3",
+      "maximum_estimate_difference": 0.0,
+      "maximum_analytic_variance_difference": 2.1316282072803006e-14,
+      "matches_within_tolerance": true
+    },
+    {
+      "slug": "dense4_seed0_4",
+      "maximum_estimate_difference": 0.0,
+      "maximum_analytic_variance_difference": 1.9539925233402755e-14,
+      "matches_within_tolerance": true
+    },
+    {
+      "slug": "dense4_seed0_5",
+      "maximum_estimate_difference": 0.0,
+      "maximum_analytic_variance_difference": 1.4210854715202004e-14,
+      "matches_within_tolerance": true
+    }
+  ],
+  "inputs": {
+    "random_sparse_dense/inputs/common_input_state.npy": "c524a2d52b13c42a3db9e541a7af9ee11cfed32e78412a0c0e0f858adf35378d",
+    "random_sparse_dense/inputs/hamiltonians/dense_hamiltonian_4_1.npy": "202dc5030a93e8a54a084d0abb8453678608f9b2217a52fa0d29f4badeb44afe",
+    "random_sparse_dense/inputs/hamiltonians/dense_hamiltonian_4_1.txt": "59a9030125cbbc9b9d1f9ca8377d02130fe03b1c319ef9902c88ec64c74a32b3",
+    "random_sparse_dense/inputs/hamiltonians/dense_hamiltonian_4_2.npy": "100d1791e0f0c2a5af6ef5176d0d050efc37f199ba66a052422c54e1cb1835e2",
+    "random_sparse_dense/inputs/hamiltonians/dense_hamiltonian_4_2.txt": "c4c7c80beeb737dee2b2d98415b28e09da14a0738349c2a5e848c57e4f6b6249",
+    "random_sparse_dense/inputs/hamiltonians/dense_hamiltonian_4_3.npy": "8bf1bba22f5341c74415bdb4650f2b19cd597b83c2080acde3272ba4a4f85c60",
+    "random_sparse_dense/inputs/hamiltonians/dense_hamiltonian_4_3.txt": "e0ea28aacf6922fceca81278344f58f9479ae872934509e2f8a80d38028f55c4",
+    "random_sparse_dense/inputs/hamiltonians/dense_hamiltonian_4_4.npy": "442ec29e68f22c1d0289a0bedb3ed500fb29dd1f7a16e99e131a1932df559d1e",
+    "random_sparse_dense/inputs/hamiltonians/dense_hamiltonian_4_4.txt": "c45fc7eee9b6e633adcea34838f73aa5298b1757a9554aadfbf26b8fc0a0f4e3",
+    "random_sparse_dense/inputs/hamiltonians/dense_hamiltonian_4_5.npy": "eff14146173bbbc365416b3f87678388788a53efebbc1e330024519143723691",
+    "random_sparse_dense/inputs/hamiltonians/dense_hamiltonian_4_5.txt": "b990855e87ec6c73a458f2461000efd4fc29afb8511508aa38569b946cdd57ed",
+    "random_sparse_dense/inputs/hamiltonians/sparse_hamiltonian_4_1.npy": "c311dbe6e7c0d34a4449fd38eea9c90af3845e659fb99d5fe25c11e6463862c6",
+    "random_sparse_dense/inputs/hamiltonians/sparse_hamiltonian_4_1.txt": "a81e49717220db46fe2a33b5b294b626cec7b4ecce0fb74ddfeac9a5609018ce",
+    "random_sparse_dense/inputs/hamiltonians/sparse_hamiltonian_4_2.npy": "5deae5073612742cec8b0cfbd4ad7de3816cf989ed6b0acf770017dbbdc6e7a5",
+    "random_sparse_dense/inputs/hamiltonians/sparse_hamiltonian_4_2.txt": "5722ec670ec11586ae194c7571cef0d35890777f637b71fdda8f1f16dc39ffb3",
+    "random_sparse_dense/inputs/hamiltonians/sparse_hamiltonian_4_3.npy": "485505781b078ffba68c7999effc55f49b8c50580ac32ed348458720c81caf81",
+    "random_sparse_dense/inputs/hamiltonians/sparse_hamiltonian_4_3.txt": "bc97741e755ece4e7a8e3990e971c9b7c075f05037d1b91ea59b96e7410d8874",
+    "random_sparse_dense/inputs/hamiltonians/sparse_hamiltonian_4_4.npy": "065ab8b8e27edbb680d9d3025374479c6069545dff08a40073d67824939b3114",
+    "random_sparse_dense/inputs/hamiltonians/sparse_hamiltonian_4_4.txt": "f7d20c33a7ed54b15ca52a0984330e50f24f38e463630decca2d1942bbe33784",
+    "random_sparse_dense/inputs/hamiltonians/sparse_hamiltonian_4_5.npy": "6774287b0184ea394d90e5f2b4781461d32b38697d5b8ed86bf7a694ecc828e1",
+    "random_sparse_dense/inputs/hamiltonians/sparse_hamiltonian_4_5.txt": "3148490d1860a3e2ebba61e3879d19acf30b3348b23df6ed05d12566df004f73",
+    "random_sparse_dense/processed/review_figures/random_calibrated_gpd_empirical50_summary.csv": "adce65cbaf5812896c04c11ea0926cadbbd91934f98cc95737c670f8e0e434f0",
+    "random_sparse_dense/provenance/original_schedule_cache/dense4_seed0_1_Derand.npz": "758fa0f07fb4fb984d104338870b4672263bf7c279d893cc3124a348d373f80d",
+    "random_sparse_dense/provenance/original_schedule_cache/dense4_seed0_1_SG.npz": "d3ba717566bfe9bbaac84c91f089189258170135c73857ea1f80cd782c1fcc08",
+    "random_sparse_dense/provenance/original_schedule_cache/dense4_seed0_2_Derand.npz": "0992df3af4273c3b7428ef381b77ba3634d61c420a3e2ca166a5d2fb1c3d6bb4",
+    "random_sparse_dense/provenance/original_schedule_cache/dense4_seed0_2_SG.npz": "e9121cc28a0f89bbc20e447a846cf2a77c668003136dc1282aa6a8d285dd7df8",
+    "random_sparse_dense/provenance/original_schedule_cache/dense4_seed0_3_Derand.npz": "f73a1bdf1eb6ae93f0df4af3a0171b5749e4c79daca9d5469b04a7ac95f646f9",
+    "random_sparse_dense/provenance/original_schedule_cache/dense4_seed0_3_SG.npz": "feca7b309ca8ae68548dd1c2c515fbe27806505d8ae7b6150ce1b57e2b70c369",
+    "random_sparse_dense/provenance/original_schedule_cache/dense4_seed0_4_Derand.npz": "66693248c81ee872c85d074554a32c15d6bb97a08363c4206990f9cd74f71d43",
+    "random_sparse_dense/provenance/original_schedule_cache/dense4_seed0_4_SG.npz": "8ac04552d9f01132aa2e3001d50d6baddc68773a6f3491871e6caba854d85e31",
+    "random_sparse_dense/provenance/original_schedule_cache/dense4_seed0_5_Derand.npz": "4a5eb00615619717f7485b396863b099e74462d76ed3c44292174f2f414f6f5b",
+    "random_sparse_dense/provenance/original_schedule_cache/dense4_seed0_5_SG.npz": "dd69004421811c6a2d20049d77aedc818d98775a284fcc102d112ae751301f43",
+    "random_sparse_dense/provenance/original_schedule_cache/sparse4_seed0_1_Derand.npz": "3cc8b146a6de0486034f7ac0808640a610af68dabea08c6afc52fc3608c790b5",
+    "random_sparse_dense/provenance/original_schedule_cache/sparse4_seed0_1_SG.npz": "c239256077932e840b0c31651fea44be4ba226743567127f426890956da7f87f",
+    "random_sparse_dense/provenance/original_schedule_cache/sparse4_seed0_2_Derand.npz": "0771d930878d6d69f7ae9f6362ac218f11cbe8c40c68eb9003e52d3ad1f8f87b",
+    "random_sparse_dense/provenance/original_schedule_cache/sparse4_seed0_2_SG.npz": "f1085af7ecddb7dab3a8b00c40f902c21b8eac0fd3b4ef84d3d41195e524fca2",
+    "random_sparse_dense/provenance/original_schedule_cache/sparse4_seed0_3_Derand.npz": "62bc0b410cf951fc02f5663eb47ee9808cbd9ed0d9a28b2b4bbad01bd3ccc696",
+    "random_sparse_dense/provenance/original_schedule_cache/sparse4_seed0_3_SG.npz": "bd09c153ecebdac919e2b8b23391be2cdb907455f209756d1d3df810027fce19",
+    "random_sparse_dense/provenance/original_schedule_cache/sparse4_seed0_4_Derand.npz": "38a9b08692a16691b8688c9579fdc04ee30ca6f0ecab41d7739bcda2ca04794a",
+    "random_sparse_dense/provenance/original_schedule_cache/sparse4_seed0_4_SG.npz": "35fe59aa0e988b96c6a148851bea65e641e4950ce2e0adbc4998bbf8129b1507",
+    "random_sparse_dense/provenance/original_schedule_cache/sparse4_seed0_5_Derand.npz": "853bcd1dc353f6e57fdae598ac70f4c5857ae7252d1742e9ed818b286a073846",
+    "random_sparse_dense/provenance/original_schedule_cache/sparse4_seed0_5_SG.npz": "a80ebd72facd4d2395146e8ce9340d9e45c855407eedbfb081edaf25a83d0a72",
+    "random_sparse_dense/results/pauli_schedules/dense4_seed0_1_AP.npz": "0c27799d69e3040c0e130777e008610f888f73aaca3cb22d620b08c828da0c3e",
+    "random_sparse_dense/results/pauli_schedules/dense4_seed0_1_OGM.npz": "5957a072b26d451cc5315d9753fcc3676234973df83da287cc34c3cbe0974880",
+    "random_sparse_dense/results/pauli_schedules/dense4_seed0_2_AP.npz": "913f8c8d942d54d5aa2befb53b007e2f5a5da762b071ca51cc6b9894965e0786",
+    "random_sparse_dense/results/pauli_schedules/dense4_seed0_2_OGM.npz": "f74a50d623e7dce4bdd0c8381034f6d27b50d233143eb7dd99b8dde8c7601005",
+    "random_sparse_dense/results/pauli_schedules/dense4_seed0_3_AP.npz": "96458abb67e012cfa7938ea8f3e5e5ca9c2622160008c2fe15c1a6742cf08401",
+    "random_sparse_dense/results/pauli_schedules/dense4_seed0_3_OGM.npz": "270d0019fb61138e35982a52bb5fd4f305e64019ca1941d9618834a323d6de89",
+    "random_sparse_dense/results/pauli_schedules/dense4_seed0_4_AP.npz": "10aa22f1d8398d2ffb44b27e4e5d4c4c4acd568360a3beb8352c693110f15fa5",
+    "random_sparse_dense/results/pauli_schedules/dense4_seed0_4_OGM.npz": "9503311bdf4ff877d6ed9e73ecec800e6b9c0499bdaea61ac7ee7d34f94a140a",
+    "random_sparse_dense/results/pauli_schedules/dense4_seed0_5_AP.npz": "8152f2e7bbe98811700e49307dbda36e93438353fc425ca09f2f6f5e13229cc0",
+    "random_sparse_dense/results/pauli_schedules/dense4_seed0_5_OGM.npz": "d5aea342ab95075ac4669d362b898a0b1c0b09aef16bb72b7d6b080a524d1d19",
+    "random_sparse_dense/results/pauli_schedules/sparse4_seed0_1_AP.npz": "3b8c82d4a7585a2aa3130fdc282e459656eaeb560eef72496cc94c27161f04f5",
+    "random_sparse_dense/results/pauli_schedules/sparse4_seed0_1_OGM.npz": "f6ce46ada83e8342554fa1ff9cc58977721a430294b73272d7954212db985961",
+    "random_sparse_dense/results/pauli_schedules/sparse4_seed0_2_AP.npz": "5e65e6a347c3afbcd9c28d93c5579aa5f57dbaaf87d83c440ea11ce8b22d554c",
+    "random_sparse_dense/results/pauli_schedules/sparse4_seed0_2_OGM.npz": "579f9b53a4fd70d3e994620e1d84bca54d7ae4ad6dd98f343e90737dfcb9960c",
+    "random_sparse_dense/results/pauli_schedules/sparse4_seed0_3_AP.npz": "7a6966decc228e7966b2dac12887cf039ee09599726a8ddfe3164ab171cc2dab",
+    "random_sparse_dense/results/pauli_schedules/sparse4_seed0_3_OGM.npz": "e145ffdf32da3da86f54cb746a6a57854c39117779bdbed5c8ba1404d59028d0",
+    "random_sparse_dense/results/pauli_schedules/sparse4_seed0_4_AP.npz": "881453eb3eb761914d1e130b4decc9cbd49b2afe3c346feafd8fe9e0ad8637e6",
+    "random_sparse_dense/results/pauli_schedules/sparse4_seed0_4_OGM.npz": "7a53d1107034997c87e30b7754bd2a0296491b5e1ed87ebd94858a4d59d02bc9",
+    "random_sparse_dense/results/pauli_schedules/sparse4_seed0_5_AP.npz": "f82c546d5f2d9cda6286ed22e04fb8dd0d5ad6fb8d6625aab49bfc94f13d1bbe",
+    "random_sparse_dense/results/pauli_schedules/sparse4_seed0_5_OGM.npz": "1bef409ac761667d74a50f551313a71865d5e8d29b8f15add30f930c94f05a5a",
+    "random_sparse_dense/results/random_all_methods_empirical50_instance.csv": "8bc4ebfda66efdcb12accace5ff7e940c9d88ef416c559fa96e13ad5a89c1771",
+    "random_sparse_dense/results/random_all_methods_empirical50_replicates.csv": "58d712c89330dfecbc437ac5f6d7a8d95ff1e6eb14894d6ee1058430cfa0e37e"
+  },
+  "outputs": {
+    "pauli_figure5_summary.csv": "4c4a587619c3931aae38af1db9ea300fd1e2f07e1825758b7c5b172c980dd482",
+    "pauli_instance_results.csv": "1c1c15feafcca54114b8a95ebe8490fdd11e29c1123bdae333103f2d51de7936",
+    "pauli_replicates.csv": "07e03cfd24f997f7b00aba7668efa3194b929bc680595e5dc1d5bacc57aed7b8"
+  }
+}

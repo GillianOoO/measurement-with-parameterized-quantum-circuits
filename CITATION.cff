@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "Please cite the paper below and record the repository commit. The arXiv paper is to be updated to reflect the current manuscript and GPD/SRDD results."
+title: "Measurement with parameterized quantum circuits"
+type: software
+authors:
+  - family-names: Wu
+    given-names: Bujiao
+  - family-names: Kong
+    given-names: Lingyu
+  - family-names: Yan
+    given-names: Yuxuan
+  - family-names: Wei
+    given-names: Fuchuan
+  - family-names: Liu
+    given-names: Zhenhuan
+repository-code: "https://github.com/GillianOoO/measurement-with-parameterized-quantum-circuits"
+preferred-citation:
+  type: article
+  title: "Expectation value estimation with parametrized quantum circuits"
+  authors:
+    - family-names: Wu
+      given-names: Bujiao
+    - family-names: Kong
+      given-names: Lingyu
+    - family-names: Yan
+      given-names: Yuxuan
+    - family-names: Wei
+      given-names: Fuchuan
+    - family-names: Liu
+      given-names: Zhenhuan
+  year: 2024
+  journal: arXiv
+  doi: "10.48550/arXiv.2407.19499"
+  url: "https://arxiv.org/abs/2407.19499"

@@ -1,0 +1,9 @@
+# Verified Figure 3 Born-outcome replay environment, Python 3.12.
+numpy==2.5.3
+scipy==1.18.1
+numba==0.67.0
+qiskit==2.5.2
+quimb==1.15.0
+pandas==3.0.1
+cotengra==0.8.2
+autoray==0.11.0

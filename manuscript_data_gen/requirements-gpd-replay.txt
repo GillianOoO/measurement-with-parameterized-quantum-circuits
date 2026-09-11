@@ -1,0 +1,5 @@
+# Verified 70-row calibrated GPD replay, Python 3.12.
+# NumPy's multinomial streams differ for some seeds in later releases.
+numpy==2.0.2
+scipy==1.18.1
+jax[cpu]==0.6.2

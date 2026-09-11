@@ -1,0 +1,4 @@
+# Python 3.12 molecular construction/reselection checks; separate from GPD.
+-r requirements-replay.txt
+openfermion==1.8.1
+matplotlib==3.11.1
