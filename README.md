@@ -56,6 +56,14 @@ between verified replay and de novo simulation, see
 [the reproduction guide](manuscript_data_gen/README.md) and
 [verification status](manuscript_data_gen/VERIFICATION.md).
 
+The current random-Hamiltonian comparison uses **50 independent Hamiltonians
+in each of the sparse and dense regimes**, with the same Hamiltonian and
+input state supplied to every method. The release includes their optimized
+GPD fragments, calibration and allocation records, Pauli schedules, and
+individual estimates. Main Figure 5 and the random panels of SI Figure 1
+use this enlarged ensemble; the earlier five-instance inputs are retained
+for seed-continuity and regression checks.
+
 ## Paper and citation
 
 This repository accompanies the updated manuscript of
@@ -234,20 +242,29 @@ retains its own matching pattern and is not the periodic GPD ansatz.
 
 ### SRDD
 
-For electronic tensors, every positive rank is independently optimized at all
-requested depths. Its depth is chosen first by the physical-particle-sector
-Frobenius residual, with ties resolved toward the shallower circuit. The
-selected source is then processed by:
+For electronic tensors, every positive density--density factor count
+`K_dd` is independently fitted at the requested depths. The pipeline is:
 
-1. joint shallow rotated-density tensor fitting;
-2. the modified F3–R2 redistribution with full-Fock centered half-ranges;
-3. a full-rank, greedy exact-fill, depth-matched one-body cover with at least
-   one added shallow rotation; and
-4. fixed-shot rank selection and integer allocation.
+1. joint shallow rotated-density tensor fitting at each `(K_dd, depth)`;
+2. depth selection at fixed `K_dd` using the fixed-electron-number-subspace
+   Frobenius residual, with ties resolved toward the shallower circuit;
+3. modified F3–R2 redistribution with full-Fock centered half-ranges;
+4. depth-matched greedy one-body completion; and
+5. integer measurement allocation and comparison of the complete candidates
+   at the requested number of measurements.
 
-The electronic frontier includes the rank-zero one-body-only shallow cover.
-Selecting the largest fitted positive rank is marked provisional so the rank
-grid can be extended before drawing a convergence conclusion.
+The total number of settings is `K = K_dd + L`, where `L` counts additional
+one-body settings. The small-system API and H4/H6 experiment profile require
+a full-numerical-row-rank completion dictionary. The BeH2/N2 manuscript driver
+tests one added rotation and retains only candidates passing its reconstruction
+checks; it does not impose the small-system full-rank gate.
+
+The API frontier includes the zero-factor one-body-only candidate. BeH2/N2
+manuscript experiments instead use their saved feasible positive factor
+counts, without an unevaluated zero candidate. Selecting the largest fitted
+positive factor count is marked provisional by the API so its candidate grid
+can be extended. Use the manuscript drivers and saved configurations, rather
+than API defaults, to reproduce the reported experiments.
 
 For a general dense or Pauli Hamiltonian without electronic tensors, SRDD uses
 `H_parallel = 0` and a deterministic coefficient-sorted qubit-wise-commuting
@@ -256,21 +273,30 @@ not presented as an electronic tensor fit.
 
 ## Frozen balanced calibration
 
-GPD and electronic SRDD use the same target-state-independent protocol:
+The small-system API, GPD experiments, and H4/H6 SRDD calculations use:
 
 - candidates `K=1,...,10` (`K=0` is selection-only);
 - calibration budgets `100, 200, 300, 500, 800, 1200, 2000, 3000`;
 - seed `918273`;
-- grouped determinant and four-phase two-determinant stabilizer probes;
+- grouped determinant and four-phase two-determinant stabilizer calibration states;
 - equal weighting of eligible rank strata for approximation and eligible
   `(K,T_cal)` strata for sampling.
 
-The four-qubit full-space catalog has 496 probes split `298/99/99`. The frozen
-molecular catalog has 500 probes split `300/100/100`. Fitted weights are
+The four-qubit full-space catalog has 496 calibration states split
+`298/99/99`. The frozen molecular catalog has 500 calibration states split
+`300/100/100`. Fitted weights are
 independent of the requested target budget `T` and are stored in result
 metadata. If a frontier does not contain all ten calibration candidates,
 calibrated selection fails explicitly; use `calibrate=False` only when the
 uncalibrated Frobenius-plus-range proxy is intended.
+
+BeH2/N2 use a separate manuscript protocol: their saved feasible positive
+factor-count candidates, calibration measurement counts
+`1300, 1600, 2000, 2400, 3000`, and separate nonnegative through-origin fits
+of squared bias and sampling variance to the corresponding squared features.
+The weights are frozen before validation and benchmark-state evaluation.
+The SRDD [method guide](manuscript_data_gen/reproduction/code/methods/srdd/README.md)
+identifies the exact drivers and saved records for both protocols.
 
 ## Shot allocation and errors
 

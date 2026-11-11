@@ -1,4 +1,4 @@
-"""Check the 2026-09-08 bias presentation without rewriting figure assets."""
+"""Check the current 50-instance SI variance and absolute-bias presentation."""
 
 from __future__ import annotations
 
@@ -62,45 +62,27 @@ def main(*, si_only=False, plot_only=False, rebuild_dir=None):
                 same(expected_bias[(molecule, "SRDD", int(row["T_total_shots"]))],
                      abs(float(row["deterministic_bias_hartree"])))
 
-    for benchmark in ("sparse", "dense"):
-        grouped = {}
-        for instance in range(1, 6):
-            path = ROOT / f"data/random_sparse_dense/results/gpd_balanced/{benchmark}4_seed0_{instance}/selected_results.csv"
-            inputs.append(path)
-            for row in rows(path):
-                bias = float(row["bias"])
-                same(bias, float(row["approximate_expectation"]) - float(row["target_expectation"]))
-                same(row["mse"], float(row["variance"]) + bias**2)
-                grouped.setdefault(int(row["shots"]), []).append(row)
-        for total, cases in grouped.items():
-            assert len(cases) == 5
-            key = benchmark, "GPD", total
-            expected_bias[key] = statistics.mean(abs(float(row["bias"])) for row in cases)
-            expected_variance[key] = statistics.mean(float(row["variance"]) for row in cases)
-
-    pauli_path = ROOT / "data/random_sparse_dense/results/random_all_methods_empirical50_instance.csv"
-    inputs.append(pauli_path)
-    grouped = {}
-    for row in rows(pauli_path):
-        if row["method"] == "GPD":  # Historical GPD rows are not the current protocol.
-            continue
+    sys.path.insert(0, str(ROOT / "code/plotting"))
+    import random_variance_ensemble50 as random50
+    random_rows = random50.aggregate()
+    inputs.extend(random50.source_paths())
+    for row in random_rows:
         key = row["benchmark"], row["method"], int(row["shots"])
-        grouped.setdefault(key, []).append(float(row["analytic_variance"]))
-    for key, values in grouped.items():
-        assert len(values) == 5
-        expected_variance[key] = statistics.mean(values)
+        expected_variance[key] = float(row["mean_instance_state_dependent_variance_hartree2"])
+        if row["method"] == "GPD":
+            expected_bias[key] = float(row["mean_instance_absolute_approximation_bias"])
 
-    table = PRESENTATIONS / "supp_absolute_bias_by_budget.csv"
+    table = (Path(rebuild_dir) / "presentations" if rebuild_dir else PRESENTATIONS) / "supp_absolute_bias_by_budget.csv"
     displayed_bias = {
         key: value for key, value in expected_bias.items()
-        if key[0] not in {"sparse", "dense"} or expected_variance[(key[0], "GPD", key[2])] > 0.0
+        if key[0] not in {"sparse", "dense"} or key[2] >= 45
     }
     actual = {(r["benchmark"], r["method"], int(r["measurements"])): r for r in rows(table)}
     assert len(actual) == len(rows(table)) == 38
     assert actual.keys() == displayed_bias.keys()
     for key, row in actual.items():
         same(row["absolute_bias"], expected_bias[key])
-        assert int(row["instances"]) == (5 if key[1] == "GPD" else 1)
+        assert int(row["instances"]) == (50 if key[1] == "GPD" else 1)
 
     # Inspect actual Matplotlib artists; suppress all figure/table writes.
     os.environ.setdefault("MPLCONFIGDIR", str(ROOT / "validation/matplotlib"))
@@ -109,7 +91,8 @@ def main(*, si_only=False, plot_only=False, rebuild_dir=None):
     from matplotlib.figure import Figure
 
     plot.base.configure()
-    with patch.object(Figure, "savefig"), patch.object(plot, "write_csv"), patch.object(plot.plt, "close"):
+    with patch.object(Figure, "savefig"), patch.object(plot, "write_csv"), patch.object(plot.plt, "close"), \
+         patch.object(plot, "build_random_variance_rows", return_value=random_rows):
         plot.render_supplement_variance()
         figure = plot.plt.gcf()
     assert len(figure.axes) == 12
@@ -183,7 +166,7 @@ def main(*, si_only=False, plot_only=False, rebuild_dir=None):
         for relative, value in reproduction["input_sha256"].items():
             assert value == digest(ROOT / relative), f"Stale input in reproduction manifest: {relative}"
         for filename, value in reproduction["plotting_programs"].items():
-            assert value == digest(ROOT / "code/plotting" / filename), f"Stale renderer: {filename}"
+            assert value == digest(ROOT / filename), f"Stale renderer: {filename}"
         assert all(item["byte_identical_to_rebuilt_reference"] for item in reproduction["numerical_figures"].values())
         for name, item in reproduction["numerical_figures"].items():
             assert item["generated_png_sha256"] == digest(redraw / f"png/{name}.png") == digest(ROOT / f"figures/rebuilt/{name}.png")
@@ -197,7 +180,7 @@ def main(*, si_only=False, plot_only=False, rebuild_dir=None):
                                     for benchmark in ("sparse", "dense")},
         "caption_absolute_bias": {m: expected_bias[(m, "SRDD", 3000)] for m in ("BeH2", "N2")},
         "checks": ["bias versus saved deterministic expectations", "molecular and GPD MSE identities",
-                   "mean absolute bias across five random instances", "all upper-curve values versus current sources",
+                   "mean absolute bias across 50 random instances", "all upper-curve values versus current sources",
                    "shared logarithmic x; downward bars from zero; left-hand linear magnitude axes; full boxes",
                    "upper/lower panel borders touch; junction tick labels do not overlap",
                    "all random-ensemble curves and bias bars use the same six counts starting at T=45; T=12 omitted only from SI display",

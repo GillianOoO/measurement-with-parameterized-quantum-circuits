@@ -20,8 +20,9 @@ The first command reproduces all five numerical figures from saved results.
 It does not rerun Hamiltonian construction,
 optimization, calibration or finite-measurement simulations. The second checks
 SI variances and biases against their saved sources, the actual plotted artists,
-and fresh render hashes. Omit `--plot-only` in the local manuscript archive to
-also check the sibling main, SI and response PDFs and compilation logs.
+and fresh render hashes. The public workflow uses `--plot-only`: private TeX
+compilation is outside this release. The validator's older document-checking
+mode refers to the historical manuscript filenames, not the current drafts.
 
 The reference environment is Python 3.14.7, NumPy 2.5.2, Matplotlib 3.11.1,
 with Times New Roman. The generated manifest records the actual versions and
@@ -31,12 +32,18 @@ PNG matching; such a run is marked `RENDERED_UNCHECKED`, not verified reproducti
 Fonts are not redistributed. The algorithm package has its own Python and
 dependency requirements; installing that package is unnecessary for plotting.
 
-The approved Main 2, 4 and 5 PDFs were created with Matplotlib 3.10.5; their
+The approved Main 2 and 4 PDFs were created with Matplotlib 3.10.5; their
 rendering can differ from the 3.11.1 rebuild references (for example automatic
 log ticks in Main 4(c)). `figures/published/` preserves those approved assets,
 while `figures/rebuilt/` is the tested 3.11.1 reference. Byte-identity claims
 apply to the latter, not to every approved PDF. PDF metadata timestamps also
-vary between runs. Main 3 and SI 1 use the current renderer in both locations.
+vary between runs. Main 3 and the latest 50-instance Main 5/SI 1 use the current renderer in both
+locations. Main 5 assets were imported byte-for-byte from the manuscript's
+`plots_figures/random_ensemble_50_20261102/`; SI 1 from
+`plots_figures/si_variance_50_20261110/`. Independent rendering matched both
+combined PNGs and all six SI panels before those references replaced the old
+five-instance assets. The corresponding small numerical reference tables are
+in `figures/reference_data/random_ensemble_50/`.
 
 ## Figure, code and data mapping
 
@@ -45,8 +52,8 @@ vary between runs. Main 3 and SI 1 use the current renderer in both locations.
 | Main 2 | `molecular_hamiltonian_errors` | `code/plotting/plot_figures_2_4_5_and_supp.py`; H4/H6 processed tables and the audited same-Hamiltonian H4 Pauli rerun. |
 | Main 3 | `additional_molecular_hamiltonian_errors` | `code/plotting/plot_figure_3.py`; empirical50 curves and their manifest in `data/shared_processed/figure3/empirical50/`, plus `fig3_extended_curves.csv` for target-error projections. |
 | Main 4 | `molecular_resource_summary` | Shared plotter; `data/shared_processed/resources/resource_chart_summary.csv` and `variance/` tables. |
-| Main 5 | `general_hamiltonian_gpd_average_errors` | Shared plotter; `data/random_sparse_dense/processed/review_figures/random_calibrated_gpd_empirical50_summary.csv` with its selection/audit metadata. |
-| SI 1 | `supp_state_dependent_variance_vs_budget` | Shared plotter; molecular variance-by-budget table, ten current GPD `selected_results.csv` files, and the audited Pauli instance-variance table. |
+| Main 5 | `general_hamiltonian_gpd_average_errors` | Shared plotter delegates to `code/experiments/plot_random_ensemble.py`; `data/random_ensemble_50/` contains 50 paired instances per regime, seven budgets and 50 estimates per point. |
+| SI 1 | `supp_state_dependent_variance_vs_budget` | Shared plotter plus `random_variance_ensemble50.py`; molecular variance-by-budget table, 100 current GPD selected-results files, and exact Pauli instance variances from the same 50-instance release. |
 
 All input filenames and SHA-256 hashes are recorded in
 `build/current_figures/validation/reproduction_manifest.json`. Method construction
@@ -54,6 +61,11 @@ is not changed by rendering. Historical AGPD molecular rows and historical GPD
 rows in the Pauli replay table are excluded by the current plotter.
 
 ## Current display conventions
+
+- Main 5: the arithmetic mean of 50 instance-level empirical RMSEs, each
+  computed from 50 independent complete estimates; not pooled RMSE. The
+  `plot_random_ensemble.py` audit independently reaggregates all 210,000
+  estimates and checks paired input/state hashes and the recorded stopping rule.
 
 - Main 3(a,c,d,f): empirical error from 50 complete estimates per point, not a
   Gaussian or analytic-error surrogate. Panels (b,e) display ten points per
@@ -70,12 +82,13 @@ rows in the Pauli replay table are excluded by the current plotter.
   reflect the bars across zero; their lengths and labels mean nonnegative
   absolute bias, not signed bias.
 - Molecular bias is `abs(Tr[rho(H_hat-H)])` for the decomposition selected at
-  each measurement count. Random-ensemble bias is the mean of five individual
+  each measurement count. Random-ensemble bias is the mean of 50 individual
   absolute biases, not the absolute mean signed bias or the RMS bias.
-- SI 1(e,f) use the common measurement counts where GPD sampling variance is
-  positive: `45,160,572,2038,7259,25848`. All methods and bias bars omit `T=12`
+- SI 1(e,f) retain the common manuscript display range T >= 45: `45,160,572,2038,7259,25848`. All methods and bias bars omit `T=12`
   in these two panels. Source data and the full variance summary retain that
-  count; Main Figure 5 still displays it. The derived bias table has 38 rows.
+  count; Main Figure 5 still displays it. The derived bias table has 38 rows. Every mean includes all 50 instances,
+  including zero variances. AP uses the mean exact conditional variance over
+  its 50 saved schedules, not the finite-sample spread of estimates.
 - Axes have full boxes; panel labels are nonbold, outside the upper-left box
   corner and aligned with its top. Legends have no frames. Main 3--5 and SI 1
   omit Ha/Ha-squared axis suffixes. Required-sample axes read `Required samples`.
@@ -96,22 +109,23 @@ The focused SI command also works in an empty output directory.
 
 Direct plotter overrides are `PAPER_REPRO_FIGURE_DIR`,
 `PAPER_REPRO_PRESENTATION_DIR`, `PAPER_REPRO_PLOT_MANIFEST`, and
-`PAPER_REPRO_FIG3_MANIFEST`. Without overrides, plotters write
+`PAPER_REPRO_FIG3_MANIFEST`, and `PAPER_REPRO_RANDOM_ENSEMBLE_DIR`. Without overrides, plotters write
 `figures/rebuilt/` and processed presentation tables. Prefer the isolated
 runner above for verification.
 
-The local canonical TeX directory is `../Journal_chemical_theory_computation/`.
-Its `figs/` contains the five numerical PDF filenames above. `response.tex` reuses the same
-Main 3, Main 4 and SI 1 assets; it has no separate renderer or dataset.
-After an intentional visual change, inspect the PDFs, synchronize approved
-copies in `figures/rebuilt/`, `figures/published/`, `figures/panels/` and the
-TeX `figs/`, then run a fresh verification. Never replace source simulation
+The private canonical TeX directory is not included in this public release.
+The current response reuses Main 3, Main 4 and SI 1 assets; it has no separate
+renderer or dataset.
+After an intentional visual change, inspect the PDFs and explicitly identify
+the approved manuscript assets and runtime-specific references before updating
+either set, then run a fresh verification. Never replace source simulation
 records merely to make a plotting comparison pass.
 
 ## Release manifests
 
 `bundle_manifest.json` records source and reference hashes;
-`required_inputs.json` records the 91 plotting inputs and reference assets.
+`required_inputs.json` records the current plotting/table inputs and reference
+assets, including the complete 50-instance dependency set.
 Their numerical contents are supplied in `datasets/*.zip`, whose independent
 manifest covers the larger numerical replay dataset as well. Experiment
 programs are in `code/methods/`, `code/experiments/` and `code/analysis/`.

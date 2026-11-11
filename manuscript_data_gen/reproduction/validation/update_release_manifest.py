@@ -14,15 +14,18 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def is_release_file(path):
+    excluded = {"__pycache__", ".matplotlib", "matplotlib", "build", "release_checks"}
+    return (path.is_file() and not excluded.intersection(path.relative_to(ROOT).parts)
+            and path.name != "current_bias_validation.json")
+
+
 def main():
     old = json.loads((ROOT / "bundle_manifest.json").read_text())
-    selected = {ROOT / p for p in old["files"] if (ROOT / p).is_file()}
+    selected = {ROOT / p for p in old["files"] if is_release_file(ROOT / p)}
     for folder in ("code", "validation"):
         selected.update(p for p in (ROOT / folder).rglob("*")
-                        if p.is_file() and p.suffix in {".py", ".md", ".json", ".ps1"}
-                        and "__pycache__" not in p.parts
-                        and "release_checks" not in p.parts
-                        and p.name != "current_bias_validation.json")
+                        if is_release_file(p) and p.suffix in {".py", ".md", ".json", ".ps1"})
     old.update(schema=3,
                scope="Portable manuscript experiment code, public plot assets and lossless numerical data archives",
                numerical_data_manifest="datasets/manifest.json",

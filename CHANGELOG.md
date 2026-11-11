@@ -1,5 +1,19 @@
 # Changelog
 
+## Current experiment release, 2026-11-11
+
+- Add the completed 50-sparse/50-dense experiment with lossless inputs,
+  GPD fits and selections, Pauli schedules, and 210,000 individual estimates.
+- Update Main Figure 5 and SI Figure 1(e,f), retaining the original five-case
+  data as regression fixtures rather than the active ensemble.
+- Add portable experiment drivers, independent saved-data audits, setting-count
+  tables and fixed-Frobenius-tolerance diagnostics.
+- Clarify the two molecular SRDD calibration/completion profiles without
+  changing their numerical algorithms or saved results.
+- Verify all numerical figure/table builds in an isolated repository tree;
+  exclude generated font caches from the source dependency manifest.
+- Distinguish saved-result reconstruction from optional de novo computation.
+
 ## Manuscript figures, 2026-09-08
 
 - Route all numerical figure commands to the current archived renderers and supply

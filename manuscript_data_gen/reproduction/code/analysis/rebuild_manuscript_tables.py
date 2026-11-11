@@ -13,6 +13,7 @@ import math
 from pathlib import Path
 
 import numpy as np
+from rebuild_setting_counts import rebuild as rebuild_setting_counts
 
 ARCHIVE = Path(__file__).resolve().parents[2]
 MOLECULES = ("H4", "H6", "BeH2", "N2")
@@ -148,7 +149,10 @@ def main(data_root: Path, output: Path) -> dict:
         lines.append(r"\hline")
     lines.append(r"\end{tabular}")
     (output / "main_circuit_resources.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    report = dict(status="PASS", scope="Rebuilt from released exact variance, bias, frozen circuit and allocation records",
+    setting_inputs, setting_report = rebuild_setting_counts(data_root, output, rows)
+    inputs.update(setting_inputs)
+    report = dict(status="PASS", scope="Rebuilt from released exact variance, bias, frozen circuit, candidate and allocation records",
+                  **setting_report,
                   projected_measurement_entries=len(rows), circuit_resource_rows=len(circuit_rows),
                   inverse_accuracy_points=len(inverse_rows),
                   simulation_refitted=False,

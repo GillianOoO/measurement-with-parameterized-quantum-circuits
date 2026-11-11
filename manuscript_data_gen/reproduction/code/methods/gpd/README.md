@@ -16,8 +16,17 @@ with NumPy 2.0.2 in release validation. Newer NumPy 2.5.3 changed some
 multinomial draws despite identical seeds. Use separate environments for
 this selector and the later random-Pauli experiments.
 
-Audit the ten released random cases, then recompute every calibrated
-selection and its 50 replicates and compare the 70 Fig. 5 instance rows:
+Current Figure 5 and SI Figure 1(e,f) use **100 cases**, 50 per regime,
+materialized under `data/random_ensemble_50/`. For the full saved-data audit,
+figure reconstruction and optional fresh optimization commands, see the
+[50-instance ensemble guide](../../experiments/RANDOM_ENSEMBLE_README.md).
+Production completed on 2026-11-02; the release update packages and verifies
+those results without rerunning all experiments.
+
+The following commands retain a **legacy ten-case check**. They recompute
+calibrated selections and 50 replicates for the original five cases per
+regime and compare 70 GPD instance/measurement-count rows. They do not
+validate the entire current 100-case figure:
 
 ```sh
 python code/methods/gpd/audit_batch_reselection.py

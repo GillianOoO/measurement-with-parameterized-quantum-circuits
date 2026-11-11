@@ -154,11 +154,13 @@ def main() -> None:
                         "serif_font": font_path.name, "serif_font_sha256": sha256(font_path)},
         "input_sha256": inputs,
         "plotting_programs": {
-            path.name: sha256(path)
+            path.relative_to(HERE).as_posix(): sha256(path)
             for path in (
                 PLOTTING / "plot_figure_3.py",
                 PLOTTING / "plot_figures_2_4_5_and_supp.py",
                 PLOTTING / "plotting_backend.py",
+                PLOTTING / "random_variance_ensemble50.py",
+                HERE / "code/experiments/plot_random_ensemble.py",
             )
         },
         "numerical_figures": comparisons,

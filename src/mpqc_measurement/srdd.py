@@ -29,6 +29,16 @@ DEPTH_SELECTION_TOLERANCE = 1.0e-12
 
 @dataclass(frozen=True)
 class SRDDConfig:
+    """Configuration of the small-system dense SRDD API.
+
+    This API uses equal-stratum calibration on positive ranks 1 through 10,
+    includes a one-body-only candidate in selection, and requires full-row-rank
+    shallow completion. The published BeH2/N2 calculations instead use their
+    reproduction drivers: positive candidates only, one added rotation, and
+    through-origin nonnegative least-squares calibration on their shot grid.
+    The API defaults are not a complete configuration for every benchmark.
+    """
+
     rank_grid: tuple[int, ...] = tuple(range(1, 11))
     depth_grid: tuple[int, ...] = (1, 2, 3)
     rho: float = 1.0e-6

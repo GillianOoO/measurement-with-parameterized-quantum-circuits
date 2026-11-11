@@ -25,5 +25,7 @@
     25848
   ],
   "gpd_selection": "stabilizer-calibrated balanced prefix",
-  "error_statistic": "mean per-instance empirical RMSE, five instances; 50 estimates per instance/count"
+  "instances_per_regime": 50,
+  "data_root": "reproduction/data/random_ensemble_50",
+  "error_statistic": "mean per-instance empirical RMSE, 50 instances; 50 estimates per instance/count"
 }

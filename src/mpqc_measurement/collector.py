@@ -216,6 +216,15 @@ def exact_shallow_collector(
     tolerance: float = 1.0e-10,
     maximum_extra: int | None = None,
 ) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
+    """Find the first full-row-rank greedy cover in the tested count range.
+
+    This is the small-system API policy, matching the H4/H6 augmentation
+    criterion. It tests one through ``maximum_extra`` added rotations and
+    checks both numerical rank and reconstruction residuals. The BeH2/N2
+    reproduction drivers separately test one added rotation and certify the
+    target residual without this full-row-rank requirement.
+    """
+
     source = np.asarray(source_rotations, dtype=float)
     target_matrix = np.asarray(collector, dtype=float)
     if source.ndim != 3 or source.shape[1] != source.shape[2]:

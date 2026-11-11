@@ -1,0 +1,39 @@
+panel,benchmark,method,measurements,absolute_bias,instances,aggregation
+a,H4,SRDD,100,0.07009421121412318,1,absolute expectation difference
+a,H4,SRDD,200,0.07009421121412318,1,absolute expectation difference
+a,H4,SRDD,300,0.07009421121412318,1,absolute expectation difference
+a,H4,SRDD,500,4.107405411657439e-05,1,absolute expectation difference
+a,H4,SRDD,800,4.107405411657439e-05,1,absolute expectation difference
+a,H4,SRDD,1200,4.107405411657439e-05,1,absolute expectation difference
+a,H4,SRDD,2000,4.107405411657439e-05,1,absolute expectation difference
+a,H4,SRDD,3000,4.107405411657439e-05,1,absolute expectation difference
+b,H6,SRDD,100,9.385403469064357e-06,1,absolute expectation difference
+b,H6,SRDD,200,9.385403469064357e-06,1,absolute expectation difference
+b,H6,SRDD,300,9.385403469064357e-06,1,absolute expectation difference
+b,H6,SRDD,500,9.385403469064357e-06,1,absolute expectation difference
+b,H6,SRDD,800,9.385403469064357e-06,1,absolute expectation difference
+b,H6,SRDD,1200,9.385403469064357e-06,1,absolute expectation difference
+b,H6,SRDD,2000,9.385403469064357e-06,1,absolute expectation difference
+b,H6,SRDD,3000,9.385403469064357e-06,1,absolute expectation difference
+c,BeH2,SRDD,1300,8.941657405614478e-07,1,absolute expectation difference
+c,BeH2,SRDD,1600,8.941657405614478e-07,1,absolute expectation difference
+c,BeH2,SRDD,2000,8.941657405614478e-07,1,absolute expectation difference
+c,BeH2,SRDD,2400,8.941657405614478e-07,1,absolute expectation difference
+c,BeH2,SRDD,3000,8.941657405614478e-07,1,absolute expectation difference
+d,N2,SRDD,1300,2.5943606516420914e-06,1,absolute expectation difference
+d,N2,SRDD,1600,2.5943606516420914e-06,1,absolute expectation difference
+d,N2,SRDD,2000,2.5943606516420914e-06,1,absolute expectation difference
+d,N2,SRDD,2400,2.5943606516420914e-06,1,absolute expectation difference
+d,N2,SRDD,3000,2.5943606516420914e-06,1,absolute expectation difference
+e,sparse,GPD,45,0.01341578027773941,50,mean of instance-level absolute expectation differences
+e,sparse,GPD,160,0.005063989946238277,50,mean of instance-level absolute expectation differences
+e,sparse,GPD,572,0.001706350724249146,50,mean of instance-level absolute expectation differences
+e,sparse,GPD,2038,0.0007913691650612315,50,mean of instance-level absolute expectation differences
+e,sparse,GPD,7259,0.00018373914165473735,50,mean of instance-level absolute expectation differences
+e,sparse,GPD,25848,5.288400127283167e-05,50,mean of instance-level absolute expectation differences
+f,dense,GPD,45,0.11566447742636685,50,mean of instance-level absolute expectation differences
+f,dense,GPD,160,0.06905267971035578,50,mean of instance-level absolute expectation differences
+f,dense,GPD,572,0.024474184056622574,50,mean of instance-level absolute expectation differences
+f,dense,GPD,2038,0.009537893123722042,50,mean of instance-level absolute expectation differences
+f,dense,GPD,7259,0.00275842989527868,50,mean of instance-level absolute expectation differences
+f,dense,GPD,25848,0.000703367461516442,50,mean of instance-level absolute expectation differences

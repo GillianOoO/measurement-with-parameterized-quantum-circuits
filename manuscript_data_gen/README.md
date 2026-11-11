@@ -19,7 +19,7 @@ The ZIP shards in `reproduction/datasets/` contain the numerical inputs/results 
 files. `datasets/manifest.json` records every original filename, byte size,
 SHA-256 hash and archive. Extraction preserves original bytes and refuses to
 overwrite a different existing file. The expanded `reproduction/data/` is
-gitignored to avoid storing a second copy. It requires approximately 1.2 GB.
+gitignored to avoid storing a second copy. It requires approximately 1.5 GB.
 The 256 MB H6 dense Hamiltonian is losslessly compressed rather than truncated.
 
 The numerical release includes Hamiltonians, electronic integrals, reference
@@ -29,10 +29,17 @@ CSV files remain intact; current plotters select only the reported methods.
 Private manuscript/response drafts, revision notes, logs, caches and QA
 screenshots are excluded.
 
+Current random-Hamiltonian figures use 50 sparse and 50 dense instances in
+`reproduction/data/random_ensemble_50/`. Their input hashes, complete
+estimates, saved GPD fits, selected designs and Pauli schedules are included.
+The earlier five-instance data remain separate regression fixtures.
+
 ## 2. Reconstruct the main and SI numerical figures
 
+With the reference Python 3.14 environment:
+
 ```powershell
-python -m pip install -e ".[artifacts]"
+python -m pip install -r manuscript_data_gen/requirements-plot-reference.txt
 python manuscript_data_gen/build_all.py --output build/manuscript
 python manuscript_data_gen/reproduction/validation/validate_bias_update.py --plot-only --rebuild-dir build/manuscript
 ```
@@ -42,15 +49,18 @@ Times New Roman (the font is not redistributed). Python 3.12 can also render,
 but different library/font versions can change pixels. In that case use
 `--skip-reference-check`; the result is explicitly `RENDERED_UNCHECKED`, not a
 verified pixel match. The package's optional numerical backends have separate
-dependencies from this plotting-only workflow.
+dependencies from this plotting-only workflow. The standalone package supports
+Python 3.10--3.13: install `-e ".[artifacts]"` in that environment if using its
+API. It is not needed by the Python 3.14 plotting entry points.
 
 Outputs are `build/manuscript/pdf/`, `png/`, `rendered/panels/`,
 `presentations/`, `tables/` and `validation/`. The full build also reconstructs
-the current main circuit-resource table and SI required-measurement table.
+the current main circuit-resource table, SI required-measurement and
+measurement-setting tables, and fixed-Frobenius-tolerance diagnostics.
 For tables alone, run `python manuscript_data_gen/build_tables.py`.
 The runner checks five numerical combination
 PNGs and twelve individual panels against saved render references.
-Main 2/4/5 published PDFs used Matplotlib 3.10.5 and are preserved separately
+Main 2/4 published PDFs used Matplotlib 3.10.5 and are preserved separately
 from the 3.11.1 render references.
 
 For one figure: `python manuscript_data_gen/build_all.py --figures s1 --output build/si`.
@@ -67,12 +77,14 @@ following directories separate the two operations:
 | `reproduction/code/methods/srdd/` | Shallow rotated-density fitting, depth selection and one-body redistribution |
 | `reproduction/code/methods/pauli_product/` | OGM, SG, Derand, AP and LCS schedules and sampling |
 | `reproduction/code/methods/fully_commuting/` | FC grouping, compilation, allocation and noisy sampling |
-| `reproduction/code/experiments/` | H4 scan/fixed geometry, H6 and BeH2/N2 drivers |
+| `reproduction/code/experiments/` | Molecular drivers and the matched 50-instance sparse/dense experiment |
 | `reproduction/code/analysis/` | Born-outcome replay, curve assembly and resource/variance verification |
 | `reproduction/code/plotting/` | Current figure renderers |
 | `reproduction/data/` | Materialized inputs, saved trajectories and statistical results |
 
 Use the README in each code directory for exact commands and dependencies.
+For the current random ensembles, see
+[the saved-result audit and optional de novo workflow](reproduction/code/experiments/RANDOM_ENSEMBLE_README.md).
 `requirements-replay.txt` records the tested Python 3.12 outcome-replay
 environment; `requirements-plot-reference.txt` specifies the separate Python
 3.14 reference renderer. Use separate virtual environments when reproducing

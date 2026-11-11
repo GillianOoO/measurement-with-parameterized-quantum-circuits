@@ -222,6 +222,14 @@ def calibrate_weights(
     *,
     seed: int = 918273,
 ) -> tuple[float, float, dict[str, Any]]:
+    """Fit the equal-stratum protocol used by GPD and small-system SRDD.
+
+    Positive candidate sizes 1 through 10 and ``CALIBRATION_SHOTS`` define
+    the fit strata; size zero is excluded. The BeH2/N2 reproduction drivers
+    use a separate through-origin nonnegative least-squares fit over their
+    feasible positive candidates and five measurement counts.
+    """
+
     indices = sector_indices(data.n_qubits, data.particle_number)
     probes, splits, probe_audit = generate_grouped_stabilizer_probes(
         indices, data.dimension, seed=seed

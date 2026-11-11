@@ -13,7 +13,18 @@ This rebuilds all 18 numerical entries in the SI required-measurement table,
 the four main-table circuit-resource rows, and the 1,208 continuous
 inverse-accuracy points used by Figure 3(b,e). It checks the new numbers against
 the released figure inputs. Outputs include CSV tables, the two TeX tabular
-blocks, and a source-hash manifest. The main table includes maximum compiled
+blocks, and a source-hash manifest.
+It also rebuilds all 30 applicable SI Table II setting-count entries, 600
+random instance/method setting counts, and 104 fixed-Frobenius-tolerance
+candidates (four molecules plus 100 random Hamiltonians). These use
+`rebuild_setting_counts.py`: OGM counts constructed groups, SG/Derand count
+saved T=25848 bases, LCS counts full support, and AP averages distinct bases
+across 50 saved schedules. GPD uses the selected reference-budget term count.
+Fixed-tolerance statistics use the saved source grid at ||H-H_hat||_F <= 0.01,
+adding molecular completion-residual bounds; they are minima over recorded
+candidates, not claims of global optimality. Outputs include
+`si_measurement_settings.csv/.tex`, `random_measurement_setting_instances.csv`,
+and `fixed_frobenius_tolerance_{instances,summary}.csv`. The main table includes maximum compiled
 CNOT counts (SRDD: 72/108; FC-IMA: 86/181 for BeH2/N2), setting counts and
 depth. Only NumPy and the Python standard library are required.
 
@@ -95,7 +106,20 @@ PAPER_REPRO_DATA_ROOT can select another extracted data directory.
 PAPER_REPRO_FIG3_OUTPUT controls sampler outputs; --output overrides it.
 No private runtime directory is added to Python's module path.
 
-## Figure 5 Pauli baselines
+## Current Figure 5: 50-instance paired ensembles
+
+```powershell
+python code/experiments/plot_random_ensemble.py --audit-only --output build/random_ensemble_audit
+```
+
+The current input is `data/random_ensemble_50/`: 100 Hamiltonians, six methods,
+seven budgets and 50 complete estimates per point. The independent audit
+reaggregates all 210,000 saved estimates, checks paired Hamiltonian/state hashes,
+and reproduces 84 ensemble-mean RMSE points. SI exact variance is aggregated by
+`code/plotting/random_variance_ensemble50.py`. See
+`code/experiments/RANDOM_ENSEMBLE_README.md` for bounded fresh-run commands.
+
+## Historical five-instance Pauli replay
 
 ~~~powershell
 python code/analysis/replay_random_pauli.py --output build/random_pauli_replay
@@ -105,13 +129,13 @@ This generates 17,500 fresh Born estimates for OGM, SG, Derand, LCS and AP
 across all ten four-qubit random Hamiltonians, seven budgets and 50 repetitions.
 It preserves the published Hamiltonian, common state, frozen schedules and
 outcome seeds. It recomputes the 350 instance-level exact variances and compares
-the 70 ensemble-mean error points with the current Figure 5 input table.
+the 70 ensemble-mean error points with the historical five-instance input table, not the current Figure 5.
 GPD is checked separately by code/methods/gpd/check_reproduction.py.
 
 The reference Pauli runtime is Python 3.14.7, NumPy 2.5.2, SciPy 1.18.0.
 The earlier GPD optimization environment is separate. Other runtimes can run
 this wrapper, but the report only passes when numerical comparisons agree.
-Use --case sparse4_seed0_1 for a bounded single-case check; a complete Figure 5
+Use --case sparse4_seed0_1 for a bounded single-case check; a complete historical
 ensemble comparison requires all five cases in each regime.
 
 The wrapper imports the estimator helpers in

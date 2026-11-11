@@ -2,13 +2,20 @@
 
 Output: `supp_state_dependent_variance_vs_budget.pdf` and a matching PNG.
 
-Each of six variance panels touches a lower inverted absolute-bias histogram, sharing a logarithmic x-axis. Lower axes are independent, linear, on the left, and start at zero at the common border. Tick labels show nonnegative bias magnitudes. Molecular bars use SRDD absolute bias; random bars use the mean of five individual absolute GPD biases. All methods and bars in panels (e,f) use 45,160,572,2038,7259,25848, omitting T=12 only from this SI display. There are 38 plotted bias values; raw data retain T=12.
+Each of six variance panels touches a lower inverted absolute-bias histogram, sharing a logarithmic x-axis. Lower axes are independent, linear, on the left, and start at zero at the common border. Tick labels show nonnegative bias magnitudes. Molecular bars use SRDD absolute bias; random bars use the mean of 50 individual absolute GPD biases. All methods and bars in panels (e,f) use 45,160,572,2038,7259,25848, omitting T=12 only from this SI display. There are 38 plotted bias values; raw data retain T=12.
 
 ```powershell
 python manuscript_data_gen/build.py manuscript_data_gen/supp/fig_s1_state_dependent_variance --output build/supp_state_dependent_variance_vs_budget.pdf
 ```
 
 First run `python manuscript_data_gen/materialize_data.py`.
+The random panels read the complete `reproduction/data/random_ensemble_50/`
+release (100 Hamiltonians and one paired common state), validated by
+`random_variance_ensemble50.py`. Zero-variance instances remain in every mean;
+exact sampling variance is never replaced by squared empirical RMSE.
+The arithmetic mean of the 50 exact conditional variances is used for AP.
+The two random panels share the manuscript's fixed T >= 45 display range;
+T=12 remains in all raw summaries and Main Figure 5.
 The figure command reads these hash-verified local inputs and the current plotter;
 no manually normalized `--input` CSV is needed. `artifact.json` records the
 figure mapping and policies; the Python plotter is the layout source of truth.

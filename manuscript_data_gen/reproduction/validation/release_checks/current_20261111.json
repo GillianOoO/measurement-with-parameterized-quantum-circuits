@@ -1,0 +1,186 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "status": "PASS",
+  "scope": "Isolated repository-only extraction, saved-result audits and figure/table reconstruction; no full optimization or fresh production sampling",
+  "isolated_release": {
+    "numerical_files": 15239,
+    "archives": 28,
+    "source_dependencies": "Repository files only; Python and documented dependencies installed separately",
+    "archive_hash_verification": "PASS",
+    "materialized_file_hash_verification": "PASS"
+  },
+  "environment": {
+    "matplotlib": "3.11.1",
+    "numpy": "2.5.2",
+    "serif_font": "times.ttf",
+    "serif_font_sha256": "931c5de5c70401d9324d5014c123802b4fb753000360ceb2f56c589403cd58c5"
+  },
+  "tests": {
+    "package_and_release": 56,
+    "large_molecule_calibration": 2,
+    "failures": 0,
+    "runtime": "Python 3.12.14, NumPy 2.0.2, JAX 0.4.38",
+    "quimb_collector_integration": "Not rerun: optional quimb unavailable"
+  },
+  "random_ensemble": {
+    "instances_per_regime": 50,
+    "instance_rows": 4200,
+    "estimates": 210000,
+    "means": 84,
+    "maximum_cross_method_target_difference": 0,
+    "calibrated_stops_checked": 100,
+    "checks": [
+      "input and completed-output hashes",
+      "complete six-method seven-budget grid",
+      "50 unique estimators per point",
+      "same H and density matrix for all methods",
+      "estimator errors and empirical RMSE from raw estimates",
+      "analytic variance-bias MSE",
+      "arithmetic mean, sample SD and SE over Hamiltonian instances",
+      "calibrated material-stall rule and smallest minimizing GPD K"
+    ]
+  },
+  "numerical_figures": {
+    "additional_molecular_hamiltonian_errors": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_pdf_sha256": "33bc220faa7595458b2398c0b9421e48e7bb34e06e4a50536a94288b535ae7b5",
+      "generated_png_sha256": "5874a645714a2413405602c716aec6aa42ff4033d6e6c3b71502a92c14c6eb7e",
+      "reference_png_sha256": "5874a645714a2413405602c716aec6aa42ff4033d6e6c3b71502a92c14c6eb7e"
+    },
+    "general_hamiltonian_gpd_average_errors": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_pdf_sha256": "f231939890809aec53b9f001d853d0b1c632013743760ef73a8a9c7d47c6d10a",
+      "generated_png_sha256": "8ae6649d8fb0a14e8690e9a1eb349b53e07a4cd9c37fde8f1b360782781d6f16",
+      "reference_png_sha256": "8ae6649d8fb0a14e8690e9a1eb349b53e07a4cd9c37fde8f1b360782781d6f16"
+    },
+    "molecular_hamiltonian_errors": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_pdf_sha256": "b5225c062cffa197da530453086cc7077bdef19dbb7b456bbf5298866ffe2d9f",
+      "generated_png_sha256": "ea5249efdc8e1db935c513a704aae8f8a5155b000ac55225fed03243ba5741df",
+      "reference_png_sha256": "ea5249efdc8e1db935c513a704aae8f8a5155b000ac55225fed03243ba5741df"
+    },
+    "molecular_resource_summary": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_pdf_sha256": "a7a84554d2cc4c5f5f2d359b824a1aae01142471a69e3ad80817234660a9d2b5",
+      "generated_png_sha256": "0352ce258e979cf8f11728a7c9761a052eab55863e5f74c6412642075abc1099",
+      "reference_png_sha256": "0352ce258e979cf8f11728a7c9761a052eab55863e5f74c6412642075abc1099"
+    },
+    "supp_state_dependent_variance_vs_budget": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_pdf_sha256": "2a6a3fb62a21315f4469e3e76fd10551c9827447e32bfabbe8198a58ff273862",
+      "generated_png_sha256": "c7a5ff39d8f00ab8dd6a13222a876baf0f42148f9dc06d11357f333c4d313d06",
+      "reference_png_sha256": "c7a5ff39d8f00ab8dd6a13222a876baf0f42148f9dc06d11357f333c4d313d06"
+    }
+  },
+  "individual_panels": {
+    "additional_molecular_errors_panel_1.png": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_png_sha256": "13978a5fd116f75f2432264a7b2c733eaaf2219f8f46e6539668460e24a1315a",
+      "reference_png_sha256": "13978a5fd116f75f2432264a7b2c733eaaf2219f8f46e6539668460e24a1315a"
+    },
+    "additional_molecular_errors_panel_2.png": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_png_sha256": "8ac57423bd9660e78cccd8fc8c4d91be4800ea3e89d196a6ea533aa9119ddb62",
+      "reference_png_sha256": "8ac57423bd9660e78cccd8fc8c4d91be4800ea3e89d196a6ea533aa9119ddb62"
+    },
+    "additional_molecular_errors_panel_3.png": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_png_sha256": "04b73b9fca13f0b40b1c4c87d7fe7f918b54bc30cac5998c38bac764ae9de405",
+      "reference_png_sha256": "04b73b9fca13f0b40b1c4c87d7fe7f918b54bc30cac5998c38bac764ae9de405"
+    },
+    "additional_molecular_errors_panel_4.png": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_png_sha256": "da8d72bfadcfa714acf3be9d7ecc67d442139f88c70c4de71b91f7175e300b79",
+      "reference_png_sha256": "da8d72bfadcfa714acf3be9d7ecc67d442139f88c70c4de71b91f7175e300b79"
+    },
+    "additional_molecular_errors_panel_5.png": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_png_sha256": "acc71492677ee1c83a43790bd944f084fb032cab16e54195777f5c3d1de83e78",
+      "reference_png_sha256": "acc71492677ee1c83a43790bd944f084fb032cab16e54195777f5c3d1de83e78"
+    },
+    "additional_molecular_errors_panel_6.png": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_png_sha256": "2c2526e7f38b9b398250d0feb1d3ad526048bb90ba2721310f35c589a1f7618c",
+      "reference_png_sha256": "2c2526e7f38b9b398250d0feb1d3ad526048bb90ba2721310f35c589a1f7618c"
+    },
+    "supp_variance_bias_panel_a.png": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_png_sha256": "6b2864d8fe3c78feff708e0182a90214f3f73bcbf7d9ee08d33299c9aa63f021",
+      "reference_png_sha256": "6b2864d8fe3c78feff708e0182a90214f3f73bcbf7d9ee08d33299c9aa63f021"
+    },
+    "supp_variance_bias_panel_b.png": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_png_sha256": "3fb0c561a2757121711d5abe393d0efb7c2b252b64ebf006310f40a3ab52360a",
+      "reference_png_sha256": "3fb0c561a2757121711d5abe393d0efb7c2b252b64ebf006310f40a3ab52360a"
+    },
+    "supp_variance_bias_panel_c.png": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_png_sha256": "9dd1804080ba0d3846061988f951337fe1253c70101c2bf12deff8c5abe045c0",
+      "reference_png_sha256": "9dd1804080ba0d3846061988f951337fe1253c70101c2bf12deff8c5abe045c0"
+    },
+    "supp_variance_bias_panel_d.png": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_png_sha256": "f22ccc0756bd70bcb1abd64e6a7f930b6cd147daabfde1cfaa9712b0eba76dfb",
+      "reference_png_sha256": "f22ccc0756bd70bcb1abd64e6a7f930b6cd147daabfde1cfaa9712b0eba76dfb"
+    },
+    "supp_variance_bias_panel_e.png": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_png_sha256": "2dd20af65599d7ca4cc65fdaafb4921b8d99af6978e085884b933257a1a1e175",
+      "reference_png_sha256": "2dd20af65599d7ca4cc65fdaafb4921b8d99af6978e085884b933257a1a1e175"
+    },
+    "supp_variance_bias_panel_f.png": {
+      "byte_identical_to_rebuilt_reference": true,
+      "generated_png_sha256": "95e192192c37e5403c82cdc196d132531fbfbadf9deb28435e1a912160b41a50",
+      "reference_png_sha256": "95e192192c37e5403c82cdc196d132531fbfbadf9deb28435e1a912160b41a50"
+    }
+  },
+  "si_bias": {
+    "bars": 38,
+    "panels": 6,
+    "checks": [
+      "bias versus saved deterministic expectations",
+      "molecular and GPD MSE identities",
+      "mean absolute bias across 50 random instances",
+      "all upper-curve values versus current sources",
+      "shared logarithmic x; downward bars from zero; left-hand linear magnitude axes; full boxes",
+      "upper/lower panel borders touch; junction tick labels do not overlap",
+      "all random-ensemble curves and bias bars use the same six counts starting at T=45; T=12 omitted only from SI display",
+      "main Figure 4 PDF unchanged",
+      "published/rebuilt SI PDF synchronization",
+      "six individual panels synchronized",
+      "fresh redraw hashes match current sources and references"
+    ]
+  },
+  "tables": {
+    "setting_count_entries": 30,
+    "fixed_tolerance_instances": 104,
+    "projected_measurement_entries": 18,
+    "circuit_resource_rows": 4,
+    "inverse_accuracy_points": 1208,
+    "output_sha256": {
+      "fig3_inverse_accuracy.csv": "9cb713a0bbe136ddadd449092d23c8f01a6baf4b6162e53abfbd787a139bae5b",
+      "fixed_frobenius_tolerance_instances.csv": "000e2d604ccc14f700dd242bf3fd6e9dcc61db1c5f7c7df282df21750b9e22eb",
+      "fixed_frobenius_tolerance_summary.csv": "9ef1ecebfb23a60d04768a12846c1168bb3be910f342a888aa13781a5d69aaae",
+      "main_circuit_resources.csv": "e526018d34a3b6bac0072834f4f3316434e6cb1c3dc31a4fe8eb5e49df6adb06",
+      "main_circuit_resources.tex": "916a3a41c74f9536d4f4a91b0e0daf4fe93f26917ffe1f8209996f4dcfbebe03",
+      "main_resource_and_si_accuracy.csv": "267e5db6f3bc12c21e90ffa695c9fc34868ac1e24d039ab7363a631b59f0fd4e",
+      "random_measurement_setting_instances.csv": "b3ee3b0466e659f6c2caedce6d387e79f37e42de8908c5378ed8456503b064af",
+      "si_measurement_settings.csv": "a5eaa8a502264fa1253d4147e45619525e6e0e31e7eaf520fb24a851e03a5e10",
+      "si_measurement_settings.tex": "f594b1c68fb4dd8b5aa6df3ad889610f40e7874141331d1082a08d3bf1e15181",
+      "si_required_measurements.tex": "b1cc07e0bbcef219de7bdd70d1bf7b8d6d8008bb75adedcc4b3bc00e9352b568"
+    }
+  },
+  "legacy": {
+    "rows": 420,
+    "estimates": 21000,
+    "exact_estimates": true,
+    "max_mean_difference": 0
+  },
+  "dataset_manifest_sha256": "9927242c3fe5cf5d0d01c836598948e47cbc93487adbcbc87b49a037ddf79c61",
+  "limitations": [
+    "No full molecular electronic-structure or SRDD/GPD production refits in this release audit",
+    "LCS setting count is full support, not audited distinct executed circuits",
+    "PDF metadata and alternative fonts/renderers may differ"
+  ]
+}

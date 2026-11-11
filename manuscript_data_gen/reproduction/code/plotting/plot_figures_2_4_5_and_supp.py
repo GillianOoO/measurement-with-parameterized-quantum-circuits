@@ -34,32 +34,6 @@ MANIFEST_PATH = Path(
         ROOT / "validation" / "plot_rebuild_manifest.json",
     )
 ).resolve()
-RANDOM_SUMMARY = (
-    ROOT
-    / "data"
-    / "random_sparse_dense"
-    / "processed"
-    / "review_figures"
-    / "random_calibrated_gpd_empirical50_summary.csv"
-)
-REVIEW_MANIFEST = RANDOM_SUMMARY.with_name("review_manifest.json")
-RANDOM_ANALYTIC_VARIANCE = (
-    ROOT
-    / "data"
-    / "random_sparse_dense"
-    / "results"
-    / "random_all_methods_empirical50_instance.csv"
-)
-RANDOM_ANALYTIC_MANIFEST = RANDOM_ANALYTIC_VARIANCE.with_name(
-    "random_all_methods_empirical50_manifest.json"
-)
-RANDOM_ANALYTIC_AUDIT = RANDOM_ANALYTIC_VARIANCE.with_name(
-    "random_all_methods_empirical50_audit.json"
-)
-RANDOM_ANALYTIC_COMMIT = RANDOM_ANALYTIC_VARIANCE.with_name(
-    "random_all_methods_empirical50_audit.commit.json"
-)
-RANDOM_CASES = ROOT / "data" / "random_sparse_dense" / "results" / "gpd_balanced"
 RANDOM_BENCHMARKS = ("sparse", "dense")
 RANDOM_METHODS = ("GPD", "OGM", "SG", "Derand", "LCS", "AP")
 RANDOM_BUDGETS = (12, 45, 160, 572, 2038, 7259, 25848)
@@ -68,6 +42,9 @@ os.environ.setdefault("MPLCONFIGDIR", str(HERE / ".matplotlib"))
 
 
 import plotting_backend as base
+import random_variance_ensemble50 as random50
+sys.path.insert(0, str(ROOT / "code/experiments"))
+import plot_random_ensemble as experiment50
 from matplotlib.ticker import FuncFormatter, FixedLocator
 
 plt = base.plt
@@ -106,88 +83,33 @@ def save(fig, stem: str) -> list[Path]:
     return base.save(fig, PLOTS, stem)
 
 
-def validate_random_summary() -> list[dict[str, str]]:
-    manifest = json.loads(REVIEW_MANIFEST.read_text(encoding="utf-8"))
-    if manifest.get("status") != "REVIEW_ONLY_CALIBRATED_GPD":
-        raise RuntimeError("Unexpected stabilizer-calibrated review status")
-    if "stabilizer-calibrated" not in str(manifest.get("selection_semantics", "")):
-        raise RuntimeError("The random GPD bundle is not stabilizer calibrated")
-    expected_hash = manifest.get("review_data_sha256", {}).get(RANDOM_SUMMARY.name)
-    if expected_hash != sha256(RANDOM_SUMMARY):
-        raise RuntimeError("Random stabilizer-calibrated summary hash mismatch")
-    rows = read_csv(RANDOM_SUMMARY)
-    methods = ("GPD", "OGM", "SG", "Derand", "LCS", "AP")
-    budgets = (12, 45, 160, 572, 2038, 7259, 25848)
-    for benchmark in ("sparse", "dense"):
-        for method in methods:
-            selected = [
-                row
-                for row in rows
-                if row["benchmark"] == benchmark and row["method"] == method
-            ]
-            if tuple(sorted(int(row["shots"]) for row in selected)) != budgets:
-                raise RuntimeError(f"Incomplete Fig. 5 grid: {benchmark}/{method}")
-            if any(int(row["instances"]) != 5 for row in selected):
-                raise RuntimeError(f"Fig. 5 must contain five {benchmark} instances")
-            if any(int(row["empirical_repeats_per_instance"]) != 50 for row in selected):
-                raise RuntimeError(f"Fig. 5 must use 50 empirical repeats: {benchmark}/{method}")
-    return rows
-
-
 def render_random_figure() -> tuple[list[Path], Path]:
-    rows = validate_random_summary()
-    methods = ("GPD", "OGM", "SG", "Derand", "LCS", "AP")
-    fig, axes = plt.subplots(1, 2, figsize=(7.25, 2.75), sharey=False)
-    for ax, benchmark, label in zip(axes, ("sparse", "dense"), ("(a)", "(b)")):
-        for method in methods:
-            selected = sorted(
-                (
-                    row
-                    for row in rows
-                    if row["benchmark"] == benchmark and row["method"] == method
-                ),
-                key=lambda row: int(row["shots"]),
-            )
-            base.line(
-                ax,
-                [int(row["shots"]) for row in selected],
-                [float(row["mean_instance_empirical_rmse"]) for row in selected],
-                method,
-            )
-        ax.set_xscale("log")
-        ax.set_yscale("log")
-        ax.set_xlabel("The number of measurements")
-        ax.set_title(f"{benchmark.capitalize()} four-qubit ensemble")
-        ax.grid(True, which="major", linestyle="--", linewidth=0.45, alpha=0.38)
-        base.panel_label(ax, label)
-    axes[0].set_ylabel("Error")
-    handles, labels = axes[1].get_legend_handles_labels()
-    fig.legend(
-        handles,
-        labels,
-        loc="upper center",
-        ncol=6,
-        bbox_to_anchor=(0.5, 1.01),
-        columnspacing=0.9,
-        frameon=False,
-    )
-    fig.subplots_adjust(left=0.10, right=0.995, bottom=0.18, top=0.78, wspace=0.28)
-    outputs = save(fig, "general_hamiltonian_gpd_average_errors")
-    plt.close(fig)
+    rows, _, report = experiment50.audit(random50.RUN)
+    if report["instances_per_regime"] != 50:
+        raise ValueError("The current manuscript requires 50 instances per regime")
+    outputs = experiment50.render(rows, PLOTS)
     presentation = PRESENTATIONS / "random_stabilizer_gpd_comparison.csv"
-    write_csv(
-        presentation,
-        [
-            {
-                **row,
-                "selection": "stabilizer-calibrated balanced GPD" if row["method"] == "GPD" else "baseline",
-                "rmse_kind": "empirical; 50 finite-shot estimates per instance and budget",
-                "source": str(RANDOM_SUMMARY.resolve()),
-            }
-            for row in rows
-        ],
-    )
+    write_csv(presentation, rows)
+    (PRESENTATIONS / "random_error_independent_audit.json").write_text(
+        json.dumps(report, indent=2) + "\n", encoding="utf-8")
     return outputs, presentation
+
+
+def random_error_source_paths() -> list[Path]:
+    run = random50.RUN
+    paths = [run / "results/manifest.json", run / "inputs/manifest.json",
+             run / "timing_decision.json", run / "inputs/common_input_state.npy"]
+    manifest = json.loads((run / "results/manifest.json").read_text())
+    paths.extend(run / "results" / name for name in manifest["output_sha256"])
+    for regime in RANDOM_BENCHMARKS:
+        for index in range(1, 51):
+            case = run / "cases" / f"{regime}4_seed0_{index}"
+            complete = case / "complete.json"
+            record = json.loads(complete.read_text())
+            paths.extend((complete, case / "gpd_selected/frontier_rows.csv",
+                          run / "inputs/hamiltonians" / f"{regime}_hamiltonian_4_{index}.npy"))
+            paths.extend(case / name for name in record["result_sha256"])
+    return sorted(set(paths))
 
 
 def h4_scan_bond(row: dict[str, str]) -> float:
@@ -452,194 +374,11 @@ def render_resource_figure() -> tuple[list[Path], Path]:
 
 
 def random_variance_source_paths() -> list[Path]:
-    paths = [
-        RANDOM_ANALYTIC_VARIANCE,
-        RANDOM_ANALYTIC_MANIFEST,
-        RANDOM_ANALYTIC_AUDIT,
-        RANDOM_ANALYTIC_COMMIT,
-    ]
-    for benchmark in RANDOM_BENCHMARKS:
-        for instance in range(1, 6):
-            case_dir = RANDOM_CASES / f"{benchmark}4_seed0_{instance}"
-            paths.extend((case_dir / "manifest.json", case_dir / "selected_results.csv"))
-    return paths
+    return random50.source_paths()
 
 
 def build_random_variance_rows() -> list[dict[str, Any]]:
-    """Average exact state-dependent variances over the five main-text instances."""
-
-    source_manifest = json.loads(RANDOM_ANALYTIC_MANIFEST.read_text(encoding="utf-8"))
-    source_audit = json.loads(RANDOM_ANALYTIC_AUDIT.read_text(encoding="utf-8"))
-    source_commit = json.loads(RANDOM_ANALYTIC_COMMIT.read_text(encoding="utf-8"))
-    if source_manifest.get("status") != "COMPLETE" or source_audit.get("status") != "PASS":
-        raise RuntimeError("The random Pauli variance source is not fully audited")
-    if source_commit.get("status") != "COMMITTED":
-        raise RuntimeError("The random Pauli variance audit is not committed")
-    expected_variance_hash = source_manifest.get("outputs_sha256", {}).get(
-        RANDOM_ANALYTIC_VARIANCE.name
-    )
-    if expected_variance_hash != sha256(RANDOM_ANALYTIC_VARIANCE):
-        raise RuntimeError("Random Pauli variance source hash mismatch")
-    if source_audit.get("output_sha256", {}).get(RANDOM_ANALYTIC_VARIANCE.name) != expected_variance_hash:
-        raise RuntimeError("Random Pauli variance audit hash mismatch")
-    if source_commit.get("manifest_sha256") != sha256(RANDOM_ANALYTIC_MANIFEST):
-        raise RuntimeError("Random Pauli variance manifest commit mismatch")
-    if source_commit.get("audit_json_sha256") != sha256(RANDOM_ANALYTIC_AUDIT):
-        raise RuntimeError("Random Pauli variance audit commit mismatch")
-
-    instance_rows: list[dict[str, Any]] = []
-    expected_hashes: dict[tuple[str, int], tuple[str, str]] = {}
-    for benchmark in RANDOM_BENCHMARKS:
-        for instance in range(1, 6):
-            slug = f"{benchmark}4_seed0_{instance}"
-            case_dir = RANDOM_CASES / slug
-            manifest_path = case_dir / "manifest.json"
-            selected_path = case_dir / "selected_results.csv"
-            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-            if manifest.get("status") != "complete":
-                raise RuntimeError(f"Incomplete stabilizer-calibrated GPD case: {slug}")
-            if manifest.get("version") != "periodic-iswap-gpd-stabilizer-balanced-v2":
-                raise RuntimeError(f"Unexpected GPD version for {slug}")
-            if manifest.get("selection", {}).get("loss") != "hypot(w_a*x_a, w_s*x_s)":
-                raise RuntimeError(f"Unexpected GPD selection loss for {slug}")
-            expected_selected_hash = manifest.get("artifacts", {}).get("selected_results.csv")
-            if expected_selected_hash != sha256(selected_path):
-                raise RuntimeError(f"Selected-result hash mismatch for {slug}")
-
-            case = manifest["case"]
-            target_hash = str(case["target_hash"])
-            state_hash = str(case["state_hash"])
-            expected_hashes[(benchmark, instance)] = (target_hash, state_hash)
-            selected = read_csv(selected_path)
-            if tuple(sorted(int(row["shots"]) for row in selected)) != RANDOM_BUDGETS:
-                raise RuntimeError(f"Incomplete GPD variance budget grid for {slug}")
-            for row in selected:
-                variance = float(row["variance"])
-                bias = float(row["bias"])
-                expectation_difference = float(row["approximate_expectation"]) - float(row["target_expectation"])
-                if not math.isfinite(bias) or not math.isclose(
-                    bias, expectation_difference, rel_tol=1.0e-10, abs_tol=1.0e-12
-                ):
-                    raise RuntimeError(f"GPD expectation/bias mismatch for {slug}/T={row['shots']}")
-                if not math.isfinite(variance) or variance < 0.0:
-                    raise RuntimeError(f"Invalid GPD variance for {slug}/T={row['shots']}")
-                if str(row["selection_uses_benchmark_state"]).lower() != "false":
-                    raise RuntimeError(f"State-dependent GPD selection detected for {slug}")
-                instance_rows.append(
-                    {
-                        "benchmark": benchmark,
-                        "instance": instance,
-                        "slug": slug,
-                        "method": "GPD",
-                        "shots": int(row["shots"]),
-                        "state_dependent_variance_hartree2": variance,
-                        "absolute_approximation_bias": abs(bias),
-                        "squared_approximation_bias": bias * bias,
-                        "selected_k": int(row["k"]),
-                        "target_hash": target_hash,
-                        "state_hash": state_hash,
-                        "variance_protocol": (
-                            "exact fixed-integer-allocation variance of the "
-                            "stabilizer-calibrated selected GPD prefix"
-                        ),
-                        "source": str(selected_path.resolve()),
-                    }
-                )
-
-    pauli_rows = [
-        row
-        for row in read_csv(RANDOM_ANALYTIC_VARIANCE)
-        if row["method"] in RANDOM_METHODS[1:]
-    ]
-    for benchmark in RANDOM_BENCHMARKS:
-        for instance in range(1, 6):
-            target_hash, state_hash = expected_hashes[(benchmark, instance)]
-            slug = f"{benchmark}4_seed0_{instance}"
-            for method in RANDOM_METHODS[1:]:
-                for shots in RANDOM_BUDGETS:
-                    selected = [
-                        row
-                        for row in pauli_rows
-                        if row["benchmark"] == benchmark
-                        and int(row["instance"]) == instance
-                        and row["method"] == method
-                        and int(row["shots"]) == shots
-                    ]
-                    if len(selected) != 1:
-                        raise RuntimeError(
-                            f"Expected one Pauli variance row for {slug}/{method}/T={shots}"
-                        )
-                    row = selected[0]
-                    if row["target_hash"] != target_hash or row["state_hash"] != state_hash:
-                        raise RuntimeError(f"Random-Hamiltonian input mismatch for {slug}/{method}")
-                    variance = float(row["analytic_variance"])
-                    if not math.isfinite(variance) or variance < 0.0:
-                        raise RuntimeError(f"Invalid Pauli variance for {slug}/{method}/T={shots}")
-                    instance_rows.append(
-                        {
-                            "benchmark": benchmark,
-                            "instance": instance,
-                            "slug": slug,
-                            "method": method,
-                            "shots": shots,
-                            "state_dependent_variance_hartree2": variance,
-                            "selected_k": "",
-                            "target_hash": target_hash,
-                            "state_hash": state_hash,
-                            "variance_protocol": str(row["protocol"]),
-                            "source": str(RANDOM_ANALYTIC_VARIANCE.resolve()),
-                        }
-                    )
-
-    summary: list[dict[str, Any]] = []
-    for benchmark in RANDOM_BENCHMARKS:
-        for method in RANDOM_METHODS:
-            for shots in RANDOM_BUDGETS:
-                selected = [
-                    row
-                    for row in instance_rows
-                    if row["benchmark"] == benchmark
-                    and row["method"] == method
-                    and int(row["shots"]) == shots
-                ]
-                if len(selected) != 5:
-                    raise RuntimeError(
-                        f"Expected five variances for {benchmark}/{method}/T={shots}"
-                    )
-                values = np.asarray(
-                    [float(row["state_dependent_variance_hartree2"]) for row in selected],
-                    dtype=float,
-                )
-                summary.append(
-                    {
-                        "benchmark": benchmark,
-                        "method": method,
-                        "shots": shots,
-                        "instances": 5,
-                        "mean_instance_state_dependent_variance_hartree2": float(np.mean(values)),
-                        "instance_variance_sample_sd_hartree2": float(np.std(values, ddof=1)),
-                        "zero_variance_instances": int(np.count_nonzero(values == 0.0)),
-                        "averaging_rule": "arithmetic mean of five instance-level exact variances",
-                        "selection": (
-                            "depth-L=4 stabilizer-calibrated GPD prefix"
-                            if method == "GPD"
-                            else "same deployed Pauli protocol as the main-text comparison"
-                        ),
-                    }
-                )
-                if method == "GPD":
-                    summary[-1].update(
-                        {
-                            "mean_instance_absolute_approximation_bias": float(
-                                np.mean([row["absolute_approximation_bias"] for row in selected])
-                            ),
-                            "mean_instance_squared_approximation_bias": float(
-                                np.mean([row["squared_approximation_bias"] for row in selected])
-                            ),
-                            "bias_averaging_rule": "arithmetic mean of five absolute expectation differences",
-                        }
-                    )
-    return summary
+    return random50.aggregate(PRESENTATIONS)
 
 
 def render_supplement_variance() -> tuple[list[Path], Path]:
@@ -689,6 +428,7 @@ def render_supplement_variance() -> tuple[list[Path], Path]:
             int(row["shots"]) for row in random_rows
             if row["benchmark"] == benchmark and row["method"] == "GPD"
             and float(row["mean_instance_state_dependent_variance_hartree2"]) > 0.0
+            and int(row["shots"]) >= 45
         }
         for benchmark in RANDOM_BENCHMARKS
     }
@@ -834,7 +574,7 @@ def render_supplement_variance() -> tuple[list[Path], Path]:
                 "method": bias_method,
                 "measurements": total,
                 "absolute_bias": value,
-                "instances": 1 if kind == "molecule" else 5,
+                "instances": 1 if kind == "molecule" else 50,
                 "aggregation": "absolute expectation difference" if kind == "molecule" else "mean of instance-level absolute expectation differences",
             })
     legend_order = ("GPD", "SRDD", "FC-IMA", "OGM", "SG", "Derand", "LCS", "AP")
@@ -895,23 +635,22 @@ def render_supplement_variance() -> tuple[list[Path], Path]:
     return outputs, presentation
 
 
-def manifest_inputs() -> list[Path]:
-    return [
-        RANDOM_SUMMARY,
-        REVIEW_MANIFEST,
-        base.H4_SRDD,
-        base.H4_COMPARISON,
-        base.H4_PAULI_SCAN,
-        base.H4_PAULI_FIXED,
-        base.H4_PAULI_AUDIT,
-        base.H4_PAULI_MANIFEST,
-        base.COMMON_COMPARISON,
-        base.RESOURCE_CHART,
-        base.STATE_VARIANCE,
-        base.STATE_VARIANCE_BY_BUDGET,
-        base.STATE_VARIANCE_FULL_BY_BUDGET,
-        *random_variance_source_paths(),
-    ]
+def manifest_inputs(chosen) -> list[Path]:
+    inputs = []
+    if "2" in chosen:
+        inputs.extend((base.H4_SRDD, base.H4_COMPARISON, base.H4_PAULI_SCAN,
+                       base.H4_PAULI_FIXED, base.H4_PAULI_AUDIT,
+                       base.H4_PAULI_MANIFEST, base.COMMON_COMPARISON))
+    if "4" in chosen:
+        inputs.extend((base.RESOURCE_CHART, base.STATE_VARIANCE, base.STATE_VARIANCE_BY_BUDGET,
+                       base.H4_PAULI_SCAN, base.H4_PAULI_FIXED, base.H4_PAULI_AUDIT,
+                       base.H4_PAULI_MANIFEST))
+    if "5" in chosen:
+        inputs.extend(random_error_source_paths())
+    if "s1" in chosen:
+        inputs.extend((base.STATE_VARIANCE_BY_BUDGET, HERE / "random_variance_ensemble50.py"))
+        inputs.extend(random_variance_source_paths())
+    return sorted(set(inputs))
 
 
 def main(*, supplement_variance_only: bool = False, figure_ids=None) -> None:
@@ -925,7 +664,7 @@ def main(*, supplement_variance_only: bool = False, figure_ids=None) -> None:
         rendered, presentation = renderers[figure_id]()
         outputs.extend(rendered)
         presentations.append(presentation)
-    inputs = manifest_inputs()
+    inputs = manifest_inputs(chosen)
     if "s1" in chosen:
         presentations.append(PRESENTATIONS / "supp_absolute_bias_by_budget.csv")
     manifest = {

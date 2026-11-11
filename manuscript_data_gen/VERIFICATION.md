@@ -1,76 +1,96 @@
-# Manuscript reproduction verification — 2026-09-11
+# Manuscript reproduction verification — 2026-11-11
 
-The release checks below ran from the relocated `manuscript_data_gen` tree,
-using the data extracted from its own ZIP archives. No original project path
-is needed for the supported commands. Numerical inputs and published results
-retain their original hashes. Small, machine-readable evidence is in
-[`reproduction/validation/release_checks/`](reproduction/validation/release_checks/).
+This release packages the latest completed experiments and rebuilds their
+numerical figures and tables. It does not claim that all nonlinear
+optimizations were rerun during this repository update.
 
-## Verified results
+## Current release checks
+
+An isolated copy containing only repository files was created without the
+original project, local runtimes, caches or extracted data. Its own ZIP shards
+were then unpacked and the commands in the reproduction guide executed.
+The first isolated check exposed a generated font-cache entry in the source
+manifest; that entry was removed and the manifest generator now excludes
+caches. The subsequent isolated build passed.
 
 | Scope | Result |
 |---|---|
-| Main Figures 2–5 and SI Figure 1 | All five numerical combination PNGs and twelve subpanel PNGs exactly match the saved reference renderer. |
-| Figure 2 | All 148 input/summary values reproduced from 17,000 archived repeated estimates, including recovered H6 Pauli records; maximum RMSE difference 1.39e-17. |
-| Figure 3 noisy SRDD/FC-IMA sampling | All 209 setting/group jobs freshly run under the frozen designs; all outcome and contribution arrays exactly match the saved arrays. |
-| Figure 3 empirical errors | All 150 points reconstructed from 7,500 complete estimates; maximum RMSE difference 1.33e-15. Zero-noise and Pauli estimates are the saved repetitions, not newly optimized experiments. |
-| Figure 3 inverse accuracy | All 1,208 source curve points verified from saved variance/bias and allocation records. |
-| Figure 5 GPD | All ten cases and seven measurement counts recalibrated, reselected and resampled from saved fragments; all 70 instance rows agree exactly using NumPy 2.0.2. |
-| Figure 5 Pauli methods | All 17,500 fresh estimates agree exactly; all 70 ensemble plot points and 350 variance entries checked. Schedules are the frozen published schedules. |
-| Main/SI tables | All four main circuit-resource rows and 18 SI required-measurement entries reproduced, including maximum CNOT counts and depths. |
-| SI variance and bias | Source MSE identities, variances, 38 displayed bias values, bar magnitudes/direction, joined axes and twelve panel images checked. |
+| Numerical archives | All 28 archives and 15,239 materialized files verified against recorded SHA-256 hashes; no original numerical member changed. |
+| Current random ensembles | All 100 matched Hamiltonians, 4,200 instance/method/measurement-count records, 210,000 complete estimates and 84 ensemble means independently audited. |
+| GPD selection | Saved calibrated stopping, smallest minimizing prefix, integer allocations and cross-method Hamiltonian/state bindings verified for every current random instance. |
+| Main Figures 2–5 and SI Figure 1 | Five combined PNGs and twelve individual panels exactly match the documented render references in the isolated tree. Latest Main 5 and SI 1 reference assets were copied from the current manuscript and independently reproduced. |
+| SI variance and bias | All displayed values checked against saved moments; 38 bias bars, their inverted orientation, zero-based left axes and joined panel borders verified. All 50 random instances enter each mean. |
+| Tables and projections | Four main circuit-resource rows, 18 required-measurement entries, 1,208 inverse-accuracy points, 30 setting-count entries, 600 random setting-count records and 104 fixed-tolerance records reconstructed. |
+| Original-ten-case regression | 420 instance records, 21,000 estimates, 40 Pauli schedule sets and 84 original five-instance means agree with the retained legacy data. |
 
-PNG identity refers to the documented Matplotlib 3.11.1 reference renderer,
-not every PDF's metadata bytes. The published Main 2/4/5 PDFs retain their
-original Matplotlib 3.10.5 rendering. Times New Roman is not redistributed.
+The fixed-Frobenius-tolerance analysis uses the recorded candidate grids and
+includes molecular completion-residual bounds. It is not a global optimality
+claim. LCS's reported 81 settings count its complete distribution support;
+individual LCS basis draws were not archived, so this is not an audit of
+distinct executed circuits. Other counting rules are recorded per output row.
 
-## Method and input checks
+The package/release test suite and separate large-molecule calibration tests
+are also rerun. The machine-readable current summary in
+[`reproduction/validation/release_checks/current_20261111.json`](reproduction/validation/release_checks/current_20261111.json)
+records their counts, the figure hashes, and the isolated-build results.
 
-- Missing canonical GPD backend, Pauli support kernels, and three extended
-  GPD source trees were recovered. Their numerical files were checked against
-  the original recorded hashes.
-- All ten GPD source/calibration/selection integrity audits passed; no
-  published case is right-censored. A deliberately bounded nonlinear
-  optimizer smoke test also passed; it is not a production fit.
-- H4/H6 Hamiltonian reconstruction errors are below 7e-14. All 16 fixed-geometry
-  SRDD ranks were recovered after recalibration/reselection; maximum analytic
-  RMSE differences are 4.24e-9 (H4) and 2.01e-11 (H6).
-- BeH2 inverse-Jordan–Wigner input recovery agreed in energy within 5.4e-14.
-  BeH2/N2 input loading, seven molecular driver imports, and 21 source-module
-  compilation checks passed.
-- Six SRDD collector/calibration tests, 24 FC tests, six Derand tests, 17
-  gate/noise tests, a 200,000-draw SRDD check and 32 FC fault-propagation checks
-  passed. The root package/release tests also passed with optional JAX installed.
-- Every released archive and every extracted numerical file is hash-verified.
-  The original 256 MB H6 matrix is included losslessly; no matrix truncation
-  or numerical rounding was performed.
+The reference plot environment is Python 3.14.7, NumPy 2.5.2 and Matplotlib
+3.11.1 with Times New Roman. PNG identity applies to those references, not to
+PDF timestamps or every renderer version. Published Main 2/4 PDFs preserve
+their earlier Matplotlib 3.10.5 rendering separately. Fonts are not distributed.
+
+## Algorithm consistency
+
+The SRDD core fitting and redistribution files were checked against the local
+production implementations. No algorithmic behavior needed changing. The
+documentation now distinguishes H4/H6 equal-stratum calibration and full-rank
+completion from BeH2/N2 through-origin calibration and one-added-rotation
+completion. API defaults are not presented as the configuration of every
+manuscript benchmark. Positive-only BeH2/N2 candidates are preserved.
+
+New ensemble entry points resolve paths relative to the repository or explicit
+arguments. Historical paths inside frozen records are provenance, not execution
+dependencies. Optional fresh experiments use separate output directories and
+the documented GPD and Pauli environments.
+
+## Earlier numerical replay checks
+
+The following were performed in the 2026-09-11 release audit and were not
+rerun as full sampling or optimization jobs in this update. Their dated
+evidence remains in `reproduction/validation/release_checks/`:
+
+- Figure 2: 148 values reaggregated from 17,000 archived estimates;
+  maximum estimation-error difference 1.39e-17.
+- Figure 3: 209 noisy setting/group jobs freshly sampled with matching
+  archived outcomes; 150 error points reassembled from 7,500 complete
+  estimates with maximum difference 1.33e-15.
+- Original five-per-regime GPD/Pauli checks: 70 GPD instance rows and
+  17,500 Pauli estimates reproduced. These are legacy regression checks,
+  not evidence for a new 100-instance sampling run.
+- H4/H6: Hamiltonian reconstruction errors below 7e-14 and all 16
+  fixed-geometry selected SRDD candidates recovered after recalibration.
+- BeH2 input recovery, molecular driver imports, collector/FC/Derand tests
+  and gate/noise checks passed in the earlier recorded environment.
 
 ## Reproduction limits
 
-1. **Not every nonlinear optimization was rerun from initialization.**
-   Full rank/depth refits, all molecular electronic-structure calculations and
-   the expensive BeH2/N2 optimization frontiers have not been independently
-   rerun in this release audit. Their input data, saved fits, current scripts
-   and commands are included. Saved-fit replay is explicitly distinguished
-   from new fitting in each method README.
-2. **H4/H6 fresh empirical SRDD values need not be bitwise identical.**
-   Dense setting diagonalization can select different bases inside degenerate
-   eigenspaces. This preserves the measurement-outcome distribution but can
-   change seeded multinomial realizations. The exact published RMSEs are
-   reproduced from the included per-repetition energy estimates, not claimed
-   from identical newly generated per-shot bitstrings. See
-   [the molecular sampling diagnosis](reproduction/code/experiments/README.md).
-3. Exact stochastic replay requires the documented environment. GPD's
-   multinomial stream uses NumPy 2.0.2; the later random-Pauli replay uses
-   NumPy 2.5.2. A single unconstrained environment is not an exact-replay
-   guarantee.
-4. Historical helper front ends are retained only where needed by current
-   kernels and are clearly identified in their READMEs. They are not the
-   supported all-manuscript entry points.
-5. Repository visibility and licensing are separate from reproducibility.
-   GitHub reported this repository as private during the update. Visibility
-   was not changed. A public journal data/software declaration additionally
-   requires author-approved public access and appropriate licensing.
+1. Full molecular electronic-structure calculations and expensive SRDD
+   rank/depth refits were not repeated here. Saved fits, inputs and driver
+   commands are included. The current random experiment was completed on
+   2026-11-02; this update audits and publishes its saved outputs.
+2. The current environment did not contain `quimb`, so the older Quimb-based
+   collector integration test was not rerun. Its dependency is documented;
+   this does not affect the plotting-only or current saved-data audits.
+3. Fresh H4/H6 dense diagonalization may choose different bases inside
+   degenerate eigenspaces. The outcome distribution is unchanged, but seeded
+   bitstrings can differ. Published errors are exactly reconstructible from
+   the archived complete estimates.
+4. Exact stochastic replay requires the recorded environments: GPD uses
+   NumPy 2.0.2; current random-Pauli experiments use NumPy 2.5.2. A single
+   unconstrained environment is not an exact-replay guarantee.
+5. Historical helpers are identified in their READMEs and are not the
+   supported current entry points. Public plotting checks do not compile
+   private manuscripts or reviewer correspondence.
 
-Each command writes a new verification report. These release records are not
-a substitute for rerunning checks after later changes.
+Each command writes fresh verification evidence. Dated release records do not
+replace rerunning the checks after subsequent changes.

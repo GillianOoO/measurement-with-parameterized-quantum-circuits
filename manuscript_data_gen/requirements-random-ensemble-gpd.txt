@@ -1,0 +1,6 @@
+# Optional de novo GPD fits: recorded production environment, Python 3.12.
+# Use a separate interpreter for Pauli methods (requirements-random-pauli.txt).
+# Frozen-data audits and figure reconstruction do not require JAX.
+numpy==2.0.2
+scipy==1.18.1
+jax[cpu]==0.4.38

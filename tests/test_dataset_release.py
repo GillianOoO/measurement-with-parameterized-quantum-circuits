@@ -48,6 +48,38 @@ class NumericalReleaseTests(unittest.TestCase):
         self.assertIn("data/H6/results/pauli_replay/source_sampling_error_replicates.csv", files)
         self.assertTrue(any("gpd_extended_sources" in p for p in files))
 
+    def test_bundle_excludes_generated_caches(self):
+        bundle = json.loads((ROOT / "bundle_manifest.json").read_text())
+        for path in bundle["files"]:
+            self.assertFalse({"__pycache__", ".matplotlib", "matplotlib", "build", "release_checks"}
+                             .intersection(PurePosixPath(path).parts), path)
+            self.assertNotEqual(PurePosixPath(path).name, "current_bias_validation.json")
+
+    def test_current_fifty_instance_ensemble_is_complete(self):
+        prefix = "data/random_ensemble_50/"
+        files = self.manifest["files"]
+        record = files[prefix + "inputs/manifest.json"]
+        with zipfile.ZipFile(ROOT / "datasets" / record["archive"]) as archive:
+            inputs = json.loads(archive.read(prefix + "inputs/manifest.json"))
+        self.assertEqual(inputs["case_count"], 100)
+        self.assertEqual(inputs["instances_per_regime"], 50)
+        self.assertEqual(len({c["file_sha256"] for c in inputs["cases"]}), 100)
+        self.assertEqual(len({c["state_file_sha256"] for c in inputs["cases"]}), 1)
+        self.assertEqual({c["benchmark"] for c in inputs["cases"]}, {"sparse", "dense"})
+        for case in inputs["cases"]:
+            base = prefix + "cases/" + case["slug"] + "/"
+            self.assertIn(base + "complete.json", files)
+            self.assertIn(base + "gpd_selected/frontier_rows.csv", files)
+            self.assertIn(base + "gpd_selected/stabilizer_weights.json", files)
+            for count in (12, 45, 160, 572, 2038, 7259, 25848):
+                self.assertIn(base + f"gpd_selected/empirical_replicates_T{count}.csv", files)
+        for path in files:
+            if path.startswith(prefix):
+                self.assertNotIn("before_original_pauli_arithmetic", path)
+                self.assertNotIn("calibration_approximation_components.csv", path)
+                self.assertNotIn("calibration_sampling_components.csv", path)
+                self.assertNotIn("progress", path)
+
 
 if __name__ == "__main__":
     unittest.main()
